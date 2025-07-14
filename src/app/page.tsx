@@ -49,15 +49,44 @@ export default async function Home() {
             </p>
 
             <div className="flex flex-col items-center justify-center gap-4">
-              <p className="text-center text-2xl text-white">
-                {session && <span>Logged in as {session.user?.name}</span>}
-              </p>
+              {session ? (
+                <div className="text-center">
+                  <h2 className="text-3xl font-bold text-green-400 mb-2">
+                    Hello, {session.user?.name || session.user?.email}! 👋
+                  </h2>
+                  <p className="text-lg text-white/80">
+                    You are successfully logged in!
+                  </p>
+                  <p className="text-sm text-white/60 mt-1">
+                    User ID: {session.user?.id}
+                  </p>
+                </div>
+              ) : (
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold text-yellow-400 mb-2">
+                    Welcome! Please sign in to continue 🔐
+                  </h2>
+                  <p className="text-lg text-white/80">
+                    You are not logged in
+                  </p>
+                </div>
+              )}
+              
               <Link
-                href={session ? "/api/auth/signout" : "/api/auth/signin"}
+                href={session ? "/api/auth/signout" : "/login"}
                 className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
               >
                 {session ? "Sign out" : "Sign in"}
               </Link>
+              
+              {!session && (
+                <Link
+                  href="/signup"
+                  className="rounded-full bg-blue-600 px-8 py-2 font-semibold no-underline transition hover:bg-blue-500"
+                >
+                  Create Account
+                </Link>
+              )}
             </div>
           </div>
 
