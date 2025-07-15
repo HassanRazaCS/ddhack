@@ -1,6 +1,8 @@
 import Link from "next/link";
 
 import { LatestPost } from "~/app/_components/post";
+import { PageHeader } from "~/app/_components/page-header";
+import { UserStatusHeader, AuthButtons } from "~/app/_components/user-status";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 
@@ -25,22 +27,13 @@ export default async function Home() {
         <div className="relative z-10 container mx-auto px-4 py-16">
           {/* Hero Section */}
           <div className="text-center mb-20">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mb-8 shadow-2xl">
-              <span className="text-4xl">✊</span>
-            </div>
-            <h1 className="text-6xl md:text-8xl font-black tracking-tight mb-6">
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-emerald-400 bg-clip-text text-transparent">
-                Unite
-              </span>
-              <span className="text-white"> & </span>
-              <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                Organize
-              </span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              The most powerful platform to organize peaceful protests, unite communities, 
-              and create lasting change through collective action.
-            </p>
+            <PageHeader
+              icon="✊"
+              title="Unite & Organize"
+              subtitle="The most powerful platform to organize peaceful protests, unite communities, and create lasting change through collective action."
+              variant="primary"
+              size="lg"
+            />
           </div>
           
           {/* Feature Cards */}
@@ -117,54 +110,15 @@ export default async function Home() {
                 </div>
 
                 <div className="flex flex-col items-center justify-center gap-6">
-                  {session ? (
-                    <div className="text-center">
-                      <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mb-4 shadow-xl">
-                        <span className="text-2xl">👋</span>
-                      </div>
-                      <h2 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-3">
-                        Welcome back, {session.user?.name || session.user?.email}!
-                      </h2>
-                      <p className="text-xl text-gray-300 mb-2">
-                        Ready to make a difference? Start organizing or join an existing movement.
-                      </p>
-                      <p className="text-sm text-gray-500 bg-slate-800/50 px-3 py-1 rounded-full inline-block">
-                        User ID: {session.user?.id}
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="text-center">
-                      <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full mb-4 shadow-xl">
-                        <span className="text-2xl">🔐</span>
-                      </div>
-                      <h2 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-3">
-                        Join the Movement
-                      </h2>
-                      <p className="text-xl text-gray-300">
-                        Sign in to start organizing and making your voice heard
-                      </p>
-                    </div>
+                  <UserStatusHeader session={session} />
+                  
+                  {session?.user && (
+                    <p className="text-sm text-gray-500 bg-slate-800/50 px-3 py-1 rounded-full inline-block">
+                      User ID: {session.user.id}
+                    </p>
                   )}
                   
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Link
-                      href={session ? "/api/auth/signout" : "/login"}
-                      className="group relative inline-flex items-center gap-2 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                    >
-                      <span className="text-lg">{session ? "👋" : "🔑"}</span>
-                      {session ? "Sign out" : "Sign in"}
-                    </Link>
-                    
-                    {!session && (
-                      <Link
-                        href="/signup"
-                        className="group relative inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                      >
-                        <span className="text-lg">✨</span>
-                        Create Account
-                      </Link>
-                    )}
-                  </div>
+                  <AuthButtons session={session} />
                 </div>
               </div>
             </div>
