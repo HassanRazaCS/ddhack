@@ -14,16 +14,25 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  date        DateTime
+  location    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  organizerId String?
+  organizer   User?     @relation(fields: [organizerId], references: [id])
+  tags        String[]
+  isPublic    Boolean   @default(true)
+  status      EventStatus @default(PLANNED)
+}
 
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
+enum EventStatus {
+  PLANNED
+  CANCELLED
+  COMPLETED
 }
 
 // Necessary for Next auth
@@ -63,7 +72,7 @@ model User {
     password      String?   // For credentials authentication
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    events        Event[]
 }
 
 model VerificationToken {
