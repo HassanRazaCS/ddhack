@@ -90,7 +90,7 @@ export function EventManager() {
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value as any)}
-          className="rounded bg-white/10 px-4 py-2 text-white"
+          className="rounded bg-white text-black px-3 py-2"
         >
           <option value="PLANNED">Planned</option>
           <option value="CANCELLED">Cancelled</option>
