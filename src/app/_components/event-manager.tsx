@@ -1,10 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import { z } from "zod";
 import { api } from "~/trpc/react";
+
+const eventSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().optional(),
+  date: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "Invalid date format",
+  }),
+  location: z.string().min(1, "Location is required"),
+  tags: z.array(z.string()).optional(),
+  isPublic: z.boolean().optional(),
+  status: z.enum(["PLANNED", "CANCELLED", "COMPLETED"]).optional(),
+});
+
+type EventInput = z.infer<typeof eventSchema>;
 
 export function EventManager() {
   const utils = api.useUtils();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
@@ -12,6 +28,8 @@ export function EventManager() {
   const [tags, setTags] = useState("");
   const [isPublic, setIsPublic] = useState(true);
   const [status, setStatus] = useState<"PLANNED" | "CANCELLED" | "COMPLETED">("PLANNED");
+
+  const [formErrors, setFormErrors] = useState<Record<string, string[]>>({});
 
   const createEvent = api.event.create.useMutation({
     onSuccess: async () => {
@@ -23,29 +41,42 @@ export function EventManager() {
       setTags("");
       setIsPublic(true);
       setStatus("PLANNED");
+      setFormErrors({});
     },
   });
 
   const [events] = api.event.getAll.useSuspenseQuery();
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const parsed = eventSchema.safeParse({
+      title,
+      description,
+      date,
+      location,
+      tags: tags
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean),
+      isPublic,
+      status,
+    });
+
+    if (!parsed.success) {
+      setFormErrors(parsed.error.flatten().fieldErrors);
+      return;
+    }
+
+    setFormErrors({});
+    createEvent.mutate(parsed.data);
+  };
+
   return (
     <div className="w-full max-w-xl space-y-6">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          createEvent.mutate({
-            title,
-            description,
-            date,
-            location,
-            tags: tags.split(",").map((t) => t.trim()).filter(Boolean),
-            isPublic,
-            status,
-          });
-        }}
-        className="flex flex-col gap-3"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <h2 className="text-xl font-bold text-white">Create New Event</h2>
+
         <input
           type="text"
           placeholder="Title"
@@ -53,18 +84,24 @@ export function EventManager() {
           onChange={(e) => setTitle(e.target.value)}
           className="rounded bg-white/10 px-4 py-2 text-white"
         />
+        {formErrors.title && <p className="text-red-500 text-sm">{formErrors.title[0]}</p>}
+
         <textarea
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           className="rounded bg-white/10 px-4 py-2 text-white"
         />
+        {formErrors.description && <p className="text-red-500 text-sm">{formErrors.description[0]}</p>}
+
         <input
           type="datetime-local"
           value={date}
           onChange={(e) => setDate(e.target.value)}
           className="rounded bg-white/10 px-4 py-2 text-white"
         />
+        {formErrors.date && <p className="text-red-500 text-sm">{formErrors.date[0]}</p>}
+
         <input
           type="text"
           placeholder="Location"
@@ -72,6 +109,8 @@ export function EventManager() {
           onChange={(e) => setLocation(e.target.value)}
           className="rounded bg-white/10 px-4 py-2 text-white"
         />
+        {formErrors.location && <p className="text-red-500 text-sm">{formErrors.location[0]}</p>}
+
         <input
           type="text"
           placeholder="Tags (comma-separated)"
@@ -79,6 +118,8 @@ export function EventManager() {
           onChange={(e) => setTags(e.target.value)}
           className="rounded bg-white/10 px-4 py-2 text-white"
         />
+        {formErrors.tags && <p className="text-red-500 text-sm">{formErrors.tags[0]}</p>}
+
         <div className="flex items-center gap-3">
           <label className="text-white">Public:</label>
           <input
@@ -87,6 +128,7 @@ export function EventManager() {
             onChange={(e) => setIsPublic(e.target.checked)}
           />
         </div>
+
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value as any)}
@@ -96,6 +138,7 @@ export function EventManager() {
           <option value="CANCELLED">Cancelled</option>
           <option value="COMPLETED">Completed</option>
         </select>
+
         <button
           type="submit"
           className="rounded bg-white/10 px-6 py-2 font-semibold text-white hover:bg-white/20 transition"
