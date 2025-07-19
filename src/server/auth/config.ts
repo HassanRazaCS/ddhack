@@ -2,7 +2,6 @@
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-
 import { db } from "~/server/db";
 
 /**
@@ -28,6 +27,7 @@ declare module "next-auth" {
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
  *
  * @see https://next-auth.js.org/configuration/options
+ *
  */
 export const authConfig = {
   providers: [
@@ -35,7 +35,7 @@ export const authConfig = {
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -61,7 +61,7 @@ export const authConfig = {
 
         const isPasswordValid = await bcrypt.compare(
           credentials.password as string,
-          user.password
+          user.password,
         );
 
         if (!isPasswordValid) {

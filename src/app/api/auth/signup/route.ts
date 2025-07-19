@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { db } from "~/server/db";
+import { ZodError } from "zod";
 
 interface SignupRequest {
   name: string;
@@ -116,6 +117,9 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json({ error: error.issues }, { status: 400 });
+    }
     console.error("Signup error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
