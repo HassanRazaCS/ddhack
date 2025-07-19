@@ -42,14 +42,14 @@ export default function SignupForm() {
         }),
       });
 
-      const data = await response.json();
+      const data = await response.json() as { error?: string };
 
       if (!response.ok) {
-        setError(data.error || "An error occurred");
+        setError(data.error ?? "An error occurred");
       } else {
         router.push("/login?message=Account created successfully");
       }
-    } catch (error) {
+    } catch {
       setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);

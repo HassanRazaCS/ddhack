@@ -1,8 +1,6 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-
 import { db } from "~/server/db";
 
 /**
@@ -19,7 +17,6 @@ declare module "next-auth" {
       // role: UserRole;
     } & DefaultSession["user"];
   }
-
   // interface User {
   //   // ...other properties
   //   // role: UserRole;
@@ -37,29 +34,29 @@ export const authConfig = {
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        if (!credentials?.email || !credentials.password) {
           return null;
         }
 
         const user = await db.user.findUnique({
           where: {
-            email: credentials.email as string,
+            email: credentials.email,
           },
-        }) as any;
+        });
 
-        if (!user || !user.password) {
+        if (!user?.password) {
           return null;
         }
 
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password as string,
-          user.password
+        const isPasswordValid: boolean = await bcrypt.compare(
+          credentials.password,
+          user.password,
         );
 
-        if (!isPasswordValid) {
+        if (isPasswordValid === false) {
           return null;
         }
 
@@ -88,7 +85,7 @@ export const authConfig = {
       ...session,
       user: {
         ...session.user,
-        id: token?.id as string || "",
+        id: token.id as string,
       },
     }),
   },

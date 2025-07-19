@@ -1,17 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { db } from "~/server/db";
+import { ZodError } from "zod";
+
+import { signupSchema } from "~/server/auth/schemas";
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, password } = await request.json();
-
-    if (!name || !email || !password) {
-      return NextResponse.json(
-        { error: "Name, email, and password are required" },
-        { status: 400 }
-      );
-    }
+    const reqBody: unknown = await request.json();
+    const { name, email, password } = signupSchema.parse(reqBody);
 
     // Check if user already exists
     const existingUser = await db.user.findUnique({
@@ -49,6 +46,9 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json({ error: error.issues }, { status: 400 });
+    }
     console.error("Signup error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
