@@ -37,13 +37,13 @@ export const authConfig = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
+        if (!credentials?.email || !credentials?.password) {
           return null;
         }
 
         const user = await db.user.findUnique({
           where: {
-            email: credentials.email,
+            email: credentials.email as string,
           },
         });
 
@@ -51,12 +51,12 @@ export const authConfig = {
           return null;
         }
 
-        const isPasswordValid: boolean = await bcrypt.compare(
-          credentials.password,
-          user.password,
+        const isPasswordValid = await bcrypt.compare(
+          credentials.password as string,
+          user.password
         );
 
-        if (isPasswordValid === false) {
+        if (!isPasswordValid) {
           return null;
         }
 
