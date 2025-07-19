@@ -16,7 +16,7 @@ export function UserStatusHeader({ session }: UserStatusHeaderProps) {
     return (
       <PageHeader
         icon="👋"
-        title={`Welcome back, ${session.user.name || session.user.email}!`}
+        title={`Welcome back, ${session.user.name ?? session.user.email}!`}
         subtitle="Ready to make a difference? Start organizing or join an existing movement."
         variant="success"
         size="md"
@@ -47,19 +47,19 @@ interface AuthButtonsProps {
 
 export function AuthButtons({ session }: AuthButtonsProps) {
   return (
-    <div className="flex flex-col sm:flex-row gap-4">
+    <div className="flex flex-col gap-4 sm:flex-row">
       <Link
         href={session ? "/api/auth/signout" : "/login"}
-        className="group relative inline-flex items-center gap-2 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+        className="group relative inline-flex transform items-center gap-2 rounded-full bg-gradient-to-r from-slate-600 to-slate-700 px-8 py-3 font-semibold shadow-lg transition-all duration-300 hover:-translate-y-1 hover:from-slate-500 hover:to-slate-600 hover:shadow-xl"
       >
         <span className="text-lg">{session ? "👋" : "🔑"}</span>
         {session ? "Sign out" : "Sign in"}
       </Link>
-      
+
       {!session && (
         <Link
           href="/signup"
-          className="group relative inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+          className="group relative inline-flex transform items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 px-8 py-3 font-semibold shadow-lg transition-all duration-300 hover:-translate-y-1 hover:from-blue-400 hover:to-indigo-400 hover:shadow-xl"
         >
           <span className="text-lg">✨</span>
           Create Account
