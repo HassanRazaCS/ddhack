@@ -7,7 +7,6 @@ import { Button } from "~/components/ui/button";
 import { Input, Textarea } from "~/components/ui/input";
 
 const legalCategories = [
-  "Family Law",
   "Immigration Law",
   "Criminal Defense",
   "Employment Law",
@@ -15,12 +14,8 @@ const legalCategories = [
   "Consumer Protection",
   "Personal Injury",
   "Civil Rights",
-  "Bankruptcy",
-  "Estate Planning",
-  "Contract Disputes",
   "Landlord/Tenant Issues",
   "Disability Rights",
-  "Healthcare Law",
   "Education Law",
   "Other"
 ];
