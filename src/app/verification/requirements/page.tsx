@@ -50,7 +50,7 @@ export default function VerificationRequirements() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg text-gray-900">Verification Decision</h3>
-                  <p className="text-gray-600">You'll receive notification of approval or rejection within 2-5 business days.</p>
+                  <p className="text-gray-600">You&apos;ll receive notification of approval or rejection within 2-5 business days.</p>
                 </div>
               </div>
             </div>
@@ -187,7 +187,7 @@ export default function VerificationRequirements() {
               <div className="space-y-2">
                 <h4 className="font-semibold text-gray-900">Common Questions:</h4>
                 <ul className="space-y-1 text-gray-600">
-                  <li>• What if my jurisdiction doesn't have a traditional bar association?</li>
+                  <li>• What if my jurisdiction doesn&apos;t have a traditional bar association?</li>
                   <li>• Can I practice in multiple jurisdictions on this platform?</li>
                   <li>• What happens if my license expires during verification?</li>
                   <li>• How do I update my information after verification?</li>

@@ -133,7 +133,7 @@ export default async function VerificationStatus() {
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700">Firm</label>
-                  <p className="text-gray-900 mt-1">{lawyerProfile.firmName || "Independent"}</p>
+                  <p className="text-gray-900 mt-1">{lawyerProfile.firmName ?? "Independent"}</p>
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700">Experience</label>

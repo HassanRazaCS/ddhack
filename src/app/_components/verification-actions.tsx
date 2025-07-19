@@ -34,7 +34,7 @@ export default function VerificationActions({ lawyerId }: VerificationActionsPro
       } else {
         alert("Error updating verification status");
       }
-    } catch (error) {
+    } catch {
       alert("Error updating verification status");
     } finally {
       setLoading(false);

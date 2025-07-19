@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "~/server/auth";
+import { db } from "~/server/db";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
@@ -12,6 +13,17 @@ export default async function LawyerDashboard() {
   }
 
   if (session.user.userType !== "LAWYER") {
+    redirect("/dashboard/seeker");
+  }
+
+  // Fetch lawyer profile to get actual verification status
+  const lawyerProfile = await db.lawyerProfile.findUnique({
+    where: {
+      userId: session.user.id,
+    },
+  });
+
+  if (!lawyerProfile) {
     redirect("/dashboard/seeker");
   }
 
@@ -28,27 +40,77 @@ export default async function LawyerDashboard() {
 
         {/* Verification Status Banner */}
         <div className="mb-8">
-          <Card className="border-l-4 border-l-yellow-500 bg-yellow-50">
-            <CardHeader>
-              <CardTitle className="text-yellow-800">Account Verification</CardTitle>
-              <CardDescription className="text-yellow-700">
-                Your account is currently under review. Once verified, you&apos;ll have full access to browse and respond to cases.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium text-yellow-800">Verification Pending</span>
+          {lawyerProfile.verificationStatus === "PENDING" && (
+            <Card className="border-l-4 border-l-yellow-500 bg-yellow-50">
+              <CardHeader>
+                <CardTitle className="text-yellow-800">Account Verification</CardTitle>
+                <CardDescription className="text-yellow-700">
+                  Your account is currently under review. Once verified, you&apos;ll have full access to browse and respond to cases.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm font-medium text-yellow-800">Verification Pending</span>
+                  </div>
+                  <Link href="/verification/requirements">
+                    <Button variant="secondary" size="sm">
+                      View Verification Requirements
+                    </Button>
+                  </Link>
                 </div>
-                <Link href="/verification/requirements">
-                  <Button variant="secondary" size="sm">
-                    View Verification Requirements
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          )}
+
+          {lawyerProfile.verificationStatus === "VERIFIED" && (
+            <Card className="border-l-4 border-l-green-500 bg-green-50">
+              <CardHeader>
+                <CardTitle className="text-green-800">Account Verified ✅</CardTitle>
+                <CardDescription className="text-green-700">
+                  Congratulations! Your professional credentials have been verified. You now have full access to browse and respond to cases.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <span className="text-sm font-medium text-green-800">Verified Lawyer</span>
+                  </div>
+                  <Link href="/cases/browse">
+                    <Button variant="secondary" size="sm">
+                      Browse Cases
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {lawyerProfile.verificationStatus === "REJECTED" && (
+            <Card className="border-l-4 border-l-red-500 bg-red-50">
+              <CardHeader>
+                <CardTitle className="text-red-800">Application Rejected</CardTitle>
+                <CardDescription className="text-red-700">
+                  Your verification application was not approved. Please contact support for more information and guidance on reapplying.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <span className="text-sm font-medium text-red-800">Application Rejected</span>
+                  </div>
+                  <a href="mailto:verification@legalaidconnect.org">
+                    <Button variant="secondary" size="sm">
+                      Contact Support
+                    </Button>
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         {/* Dashboard Content */}
@@ -64,20 +126,52 @@ export default async function LawyerDashboard() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-center py-12">
-                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">⚖️</span>
+                {lawyerProfile.verificationStatus === "VERIFIED" ? (
+                  <div className="text-center py-12">
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl">⚖️</span>
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                      Cases Available
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      Browse available pro bono cases and express your interest in helping those in need.
+                    </p>
+                    <Link href="/cases/browse">
+                      <Button>Browse Available Cases</Button>
+                    </Link>
                   </div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    Complete Your Verification
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    Once your professional credentials are verified, you&apos;ll be able to browse and respond to cases.
-                  </p>
-                  <Link href="/verification/status">
-                    <Button>Check Verification Status</Button>
-                  </Link>
-                </div>
+                ) : lawyerProfile.verificationStatus === "PENDING" ? (
+                  <div className="text-center py-12">
+                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl">⚖️</span>
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                      Complete Your Verification
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      Once your professional credentials are verified, you&apos;ll be able to browse and respond to cases.
+                    </p>
+                    <Link href="/verification/status">
+                      <Button>Check Verification Status</Button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="text-center py-12">
+                    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl">❌</span>
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                      Verification Required
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      Your verification application was not approved. Please contact support for assistance.
+                    </p>
+                    <a href="mailto:verification@legalaidconnect.org">
+                      <Button>Contact Support</Button>
+                    </a>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
@@ -132,8 +226,24 @@ export default async function LawyerDashboard() {
                 <div>
                   <label className="text-sm font-medium text-gray-700">Status</label>
                   <div className="flex items-center space-x-2 mt-1">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                    <span className="text-sm text-yellow-700">Verification Pending</span>
+                    {lawyerProfile.verificationStatus === "VERIFIED" && (
+                      <>
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span className="text-sm text-green-700">Verified</span>
+                      </>
+                    )}
+                    {lawyerProfile.verificationStatus === "PENDING" && (
+                      <>
+                        <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                        <span className="text-sm text-yellow-700">Verification Pending</span>
+                      </>
+                    )}
+                    {lawyerProfile.verificationStatus === "REJECTED" && (
+                      <>
+                        <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                        <span className="text-sm text-red-700">Application Rejected</span>
+                      </>
+                    )}
                   </div>
                 </div>
                 <div>
