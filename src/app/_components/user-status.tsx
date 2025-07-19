@@ -16,7 +16,7 @@ export function UserStatusHeader({ session }: UserStatusHeaderProps) {
     return (
       <PageHeader
         icon="👋"
-        title={`Welcome back, ${session.user.name || session.user.email}!`}
+        title={`Welcome back, ${session.user.name ?? session.user.email}!`}
         subtitle="Ready to make a difference? Start organizing or join an existing movement."
         variant="success"
         size="md"

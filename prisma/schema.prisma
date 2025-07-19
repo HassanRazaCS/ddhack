@@ -14,16 +14,88 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
+model LawyerProfile {
+    id                 String               @id @default(cuid())
+    userId             String               @unique
+    fullName           String
+    licenseNumber      String
+    jurisdiction       String               // Country, state, province, or region
+    country            String
+    verificationStatus VerificationStatus   @default(PENDING)
+    contactEmail       String
+    firmName           String?
+    specializations    String[]             // Array of legal specializations
+    yearsOfExperience  Int?
+    languagesSpoken    String[]             // Array of languages
+    createdAt          DateTime             @default(now())
+    updatedAt          DateTime             @updatedAt
+
+    user     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+    interests CaseInterest[]
+
+    @@index([verificationStatus])
+    @@index([country])
+    @@index([jurisdiction])
+}
+
+model Case {
+    id             String      @id @default(cuid())
+    seekerId       String
+    title          String
+    description    String      @db.Text
+    legalCategory  String
+    jurisdiction   String      // Country, state, province, or region  
+    country        String
+    urgencyLevel   UrgencyLevel @default(MEDIUM)
+    preferredLanguage String?
+    status         CaseStatus  @default(ACTIVE)
+    createdAt      DateTime    @default(now())
+    updatedAt      DateTime    @updatedAt
+
+    seeker    User           @relation(fields: [seekerId], references: [id], onDelete: Cascade)
+    interests CaseInterest[]
+
+    @@index([status])
+    @@index([legalCategory])
+    @@index([country])
+    @@index([urgencyLevel])
+}
+
+model CaseInterest {
+    id        String   @id @default(cuid())
+    caseId    String
+    lawyerId  String
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
 
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
+    case   Case          @relation(fields: [caseId], references: [id], onDelete: Cascade)
+    lawyer LawyerProfile @relation(fields: [lawyerId], references: [id], onDelete: Cascade)
 
-    @@index([name])
+    @@unique([caseId, lawyerId])
+}
+
+enum UserType {
+    SEEKER
+    LAWYER
+    ADMIN
+}
+
+enum VerificationStatus {
+    PENDING
+    VERIFIED
+    REJECTED
+}
+
+enum CaseStatus {
+    ACTIVE
+    IN_REVIEW
+    CLOSED
+}
+
+enum UrgencyLevel {
+    LOW
+    MEDIUM
+    HIGH
+    URGENT
 }
 
 // Necessary for Next auth
@@ -61,9 +133,12 @@ model User {
     emailVerified DateTime?
     image         String?
     password      String?   // For credentials authentication
+    userType      UserType  @default(SEEKER)
+    createdAt     DateTime  @default(now())
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    lawyerProfile LawyerProfile?
+    cases         Case[]
 }
 
 model VerificationToken {

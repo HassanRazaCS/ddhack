@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
@@ -26,10 +26,18 @@ export default function LoginForm() {
       if (result?.error) {
         setError("Invalid email or password");
       } else {
-        router.push("/");
+        // Get the updated session to check user type
+        const session = await getSession();
+        if (session?.user.userType === "LAWYER") {
+          router.push("/dashboard/lawyer");
+        } else if (session?.user.userType === "ADMIN") {
+          router.push("/admin");
+        } else {
+          router.push("/dashboard/seeker");
+        }
         router.refresh();
       }
-    } catch (error) {
+    } catch {
       setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);
