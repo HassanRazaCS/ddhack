@@ -14,9 +14,8 @@ export function ScrollReveal() {
         
         // Add staggered animation with immediate start
         setTimeout(() => {
-          const htmlElement = element as HTMLElement;
-          htmlElement.style.transform = 'translateY(0) rotateX(0deg)';
-          htmlElement.style.opacity = '1';
+          element.style.transform = 'translateY(0) rotateX(0deg)';
+          element.style.opacity = '1';
         }, index * 100); // Quick stagger
       });
     };
@@ -63,11 +62,10 @@ export function ScrollReveal() {
     const magneticButtons = document.querySelectorAll('.magnetic-btn');
     
     magneticButtons.forEach(button => {
-      const handleMouseMove = (e: Event) => {
-        const mouseEvent = e as MouseEvent;
+      const handleMouseMove = (e: MouseEvent) => {
         const rect = button.getBoundingClientRect();
-        const x = mouseEvent.clientX - rect.left - rect.width / 2;
-        const y = mouseEvent.clientY - rect.top - rect.height / 2;
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
         
         const distance = Math.sqrt(x * x + y * y);
         const maxDistance = 100;

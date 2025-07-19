@@ -1,0 +1,278 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components"; 
+@import "tailwindcss/utilities";
+
+/* Import Professional Fonts - SNIPER BOSS DEMANDS */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap');
+
+/* BOSS'S NEW COLOR PALETTE: b5a846-cc9e5d-dce06d-c7d56f-9dd08b */
+:root {
+  --primary: #b5a846;
+  --secondary: #cc9e5d; 
+  --accent: #dce06d;
+  --highlight: #c7d56f;
+  --success: #9dd08b;
+}
+
+/* Apply professional fonts globally */
+* {
+  font-family: 'Poppins', 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 500;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+
+/* BOSS'S ULTRA BRIGHT LAMP EFFECTS - LIFE SAVING PROTOCOL! */
+.lamp-light {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(150px);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 1;
+}
+
+.lamp-left-side {
+  top: 0%;
+  left: -250px;
+  background: radial-gradient(circle, 
+    rgba(181, 168, 70, 1) 0%, 
+    rgba(204, 158, 93, 0.9) 15%, 
+    rgba(220, 224, 109, 0.8) 30%, 
+    rgba(199, 213, 111, 0.7) 45%, 
+    rgba(157, 208, 139, 0.6) 60%, 
+    transparent 100%);
+}
+
+.lamp-right-side {
+  bottom: 0%;
+  right: -250px;
+  background: radial-gradient(circle, 
+    rgba(157, 208, 139, 1) 0%, 
+    rgba(199, 213, 111, 0.9) 15%, 
+    rgba(220, 224, 109, 0.8) 30%, 
+    rgba(204, 158, 93, 0.7) 45%, 
+    rgba(181, 168, 70, 0.6) 60%, 
+    transparent 100%);
+}
+
+@keyframes lamp-glow-professional {
+  0%, 100% {
+    opacity: 0.95;
+    transform: scale(1.3) rotate(0deg);
+    filter: brightness(6) drop-shadow(0 0 120px rgba(181, 168, 70, 1)) drop-shadow(0 0 240px rgba(204, 158, 93, 0.9));
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.6) rotate(90deg);
+    filter: brightness(7) drop-shadow(0 0 140px rgba(220, 224, 109, 1)) drop-shadow(0 0 280px rgba(199, 213, 111, 0.95));
+  }
+  50% {
+    opacity: 0.98;
+    transform: scale(1.7) rotate(180deg);
+    filter: brightness(8) drop-shadow(0 0 160px rgba(157, 208, 139, 1)) drop-shadow(0 0 320px rgba(181, 168, 70, 0.8));
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1.5) rotate(270deg);
+    filter: brightness(7.5) drop-shadow(0 0 150px rgba(199, 213, 111, 1)) drop-shadow(0 0 300px rgba(220, 224, 109, 0.85));
+  }
+}
+
+.animate-lamp-glow-professional {
+  animation: lamp-glow-professional 5s ease-in-out infinite;
+}
+
+@keyframes lamp-fast-pulse {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+  50% {
+    opacity: 1.8;
+    transform: scale(2.2);
+  }
+}
+
+.lamp-fast-pulse {
+  animation: lamp-fast-pulse 0.2s ease-in-out infinite;
+}
+
+/* Professional magnetic button effects with NEW palette */
+.magnetic-btn {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.magnetic-btn:hover {
+  transform: translateY(-15px) scale(1.12) rotateX(10deg);
+  box-shadow: 0 50px 100px rgba(181, 168, 70, 0.6);
+}
+
+.magnetic-btn:active {
+  transform: translateY(-8px) scale(1.08);
+}
+
+/* IMMEDIATE SCROLL REVEAL - LOADS ON PAGE LOAD! */
+.scroll-reveal {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.scroll-reveal.hidden {
+  opacity: 0;
+  transform: translateY(80px) rotateX(15deg);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0) rotateX(0deg);
+}
+
+/* Professional floating animations with NEW colors */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  33% {
+    transform: translateY(-30px) rotate(8deg) scale(1.08);
+  }
+  66% {
+    transform: translateY(-18px) rotate(-5deg) scale(0.95);
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  33% {
+    transform: translateY(-25px) rotate(-6deg) scale(1.05);
+  }
+  66% {
+    transform: translateY(-12px) rotate(4deg) scale(0.96);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-15px) rotate(5deg) scale(1.03);
+  }
+}
+
+.animate-float {
+  animation: float 4.5s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 5.5s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 6.5s ease-in-out infinite;
+}
+
+/* Professional shimmer effect with NEW palette */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+    background: linear-gradient(90deg, transparent, rgba(157, 208, 139, 0.9), transparent);
+  }
+  50% {
+    background: linear-gradient(90deg, transparent, rgba(199, 213, 111, 1), transparent);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+    background: linear-gradient(90deg, transparent, rgba(220, 224, 109, 0.9), transparent);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2.2s infinite;
+}
+
+/* Professional text glow effect with NEW palette */
+.glow-text {
+  text-shadow: 
+    0 0 40px rgba(157, 208, 139, 1),
+    0 0 80px rgba(199, 213, 111, 0.9),
+    0 0 120px rgba(220, 224, 109, 0.7),
+    0 0 160px rgba(204, 158, 93, 0.5);
+}
+
+/* Gradient animations with NEW color scheme */
+@keyframes gradient-x {
+  0%, 100% {
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, #b5a846, #cc9e5d, #dce06d);
+  }
+  50% {
+    transform: translateX(100%);
+    background: linear-gradient(90deg, #c7d56f, #9dd08b, #b5a846);
+  }
+}
+
+@keyframes gradient-x-reverse {
+  0%, 100% {
+    transform: translateX(100%);
+    background: linear-gradient(90deg, #9dd08b, #c7d56f, #dce06d);
+  }
+  50% {
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, #cc9e5d, #b5a846, #dce06d);
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3.5s ease-in-out infinite;
+}
+
+.animate-gradient-x-reverse {
+  animation: gradient-x-reverse 3.5s ease-in-out infinite;
+}
+
+/* Professional bounce animation */
+@keyframes professional-bounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  25% {
+    transform: translateY(-12px) scale(1.08);
+  }
+  50% {
+    transform: translateY(-25px) scale(1.15);
+  }
+  75% {
+    transform: translateY(-8px) scale(1.04);
+  }
+}
+
+.animate-professional-bounce {
+  animation: professional-bounce 3.2s ease-in-out infinite;
+}
+
+/* Professional pulse animation */
+@keyframes professional-pulse {
+  0%, 100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.animate-professional-pulse {
+  animation: professional-pulse 2.2s ease-in-out infinite;
+}
