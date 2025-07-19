@@ -1,3 +1,4 @@
+// import { PrismaAdapter } from "@auth/prisma-adapter"; // Not currently used
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
@@ -13,14 +14,13 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      // ...other properties
-      // role: UserRole;
+      userType: "SEEKER" | "LAWYER" | "ADMIN";
     } & DefaultSession["user"];
   }
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+
+  interface User {
+    userType: "SEEKER" | "LAWYER" | "ADMIN";
+  }
 }
 
 /**
@@ -46,6 +46,13 @@ export const authConfig = {
           where: {
             email: credentials.email as string,
           },
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            password: true,
+            userType: true,
+          },
         });
 
         if (!user?.password) {
@@ -65,6 +72,7 @@ export const authConfig = {
           id: user.id,
           email: user.email,
           name: user.name,
+          userType: user.userType,
         };
       },
     }),
@@ -79,6 +87,7 @@ export const authConfig = {
     jwt: ({ token, user }) => {
       if (user) {
         token.id = user.id;
+        token.userType = user.userType;
       }
       return token;
     },
@@ -86,7 +95,8 @@ export const authConfig = {
       ...session,
       user: {
         ...session.user,
-        id: token.id as string,
+        id: token?.id as string || "",
+        userType: token?.userType as "SEEKER" | "LAWYER" | "ADMIN" ?? "SEEKER",
       },
     }),
   },

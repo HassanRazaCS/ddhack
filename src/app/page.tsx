@@ -1,136 +1,201 @@
 import Link from "next/link";
-
-import { LatestPost } from "~/app/_components/post";
-import { PageHeader } from "~/app/_components/page-header";
-import { UserStatusHeader, AuthButtons } from "~/app/_components/user-status";
+import { redirect } from "next/navigation";
+import { Button } from "~/components/ui/button";
+import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { auth } from "~/server/auth";
-import { api, HydrateClient } from "~/trpc/server";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
   const session = await auth();
 
+  // Redirect authenticated users to their dashboard
   if (session?.user) {
-    void api.post.getLatest.prefetch();
+    if (session.user.userType === "LAWYER") {
+      redirect("/dashboard/lawyer");
+    } else if (session.user.userType === "ADMIN") {
+      redirect("/admin");
+    } else {
+      redirect("/dashboard/seeker");
+    }
   }
 
   return (
-    <HydrateClient>
-      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
-        </div>
-        
-        <div className="relative z-10 container mx-auto px-4 py-16">
-          {/* Hero Section */}
-          <div className="text-center mb-20">
-            <PageHeader
-              icon="✊"
-              title="Unite & Organize"
-              subtitle="The most powerful platform to organize peaceful protests, unite communities, and create lasting change through collective action."
-              variant="primary"
-              size="lg"
-            />
-          </div>
-          
-          {/* Feature Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
-              <div className="relative bg-gradient-to-br from-purple-800/50 to-pink-800/50 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 transform hover:-translate-y-2">
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-6 shadow-lg">
-                  <span className="text-3xl">📢</span>
-                </div>
-                <h3 className="text-2xl font-bold text-purple-200 mb-4">Organize Protests</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  Create and manage peaceful protests with powerful planning tools, event coordination, and community building features.
-                </p>
-              </div>
-            </div>
+    <div className="bg-gray-50">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              Connecting Legal Needs with{" "}
+              <span className="text-blue-200">Pro Bono Professionals</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
+              Bridging the justice gap by connecting individuals who need legal assistance 
+              with lawyers willing to provide pro bono services.
+            </p>
             
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
-              <div className="relative bg-gradient-to-br from-emerald-800/50 to-teal-800/50 backdrop-blur-sm rounded-2xl p-8 border border-emerald-500/30 hover:border-emerald-400/50 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/20 transform hover:-translate-y-2">
-                <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/signup">
+                <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg">
+                  🙋‍♂️ Find Legal Aid
+                </Button>
+              </Link>
+              <Link href="/signup">
+                <Button size="lg" variant="secondary" className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg">
+                  ⚖️ Offer Pro Bono Services
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              How It Works
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Our simple process connects those in need with legal professionals ready to help.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* For Aid Seekers */}
+            <Card className="text-center">
+              <CardHeader>
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl">📝</span>
+                </div>
+                <CardTitle>Submit Your Case</CardTitle>
+                <CardDescription>
+                  Create a detailed description of your legal issue and the type of assistance you need.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="text-center">
+              <CardHeader>
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl">🔍</span>
+                </div>
+                <CardTitle>Lawyers Review</CardTitle>
+                <CardDescription>
+                  Verified legal professionals review available cases and express interest in those they can help with.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="text-center">
+              <CardHeader>
+                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-3xl">🤝</span>
                 </div>
-                <h3 className="text-2xl font-bold text-emerald-200 mb-4">Invite & Share</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  Easily invite people and share your events across all social media platforms to amplify your voice and grow your movement.
-                </p>
-              </div>
-            </div>
-            
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
-              <div className="relative bg-gradient-to-br from-blue-800/50 to-indigo-800/50 backdrop-blur-sm rounded-2xl p-8 border border-blue-500/30 hover:border-blue-400/50 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20 transform hover:-translate-y-2">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center mb-6 shadow-lg">
-                  <span className="text-3xl">⚖️</span>
-                </div>
-                <h3 className="text-2xl font-bold text-blue-200 mb-4">Legal Aid Support</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  Access comprehensive legal resources, crowdsourced legal aid, and know your rights when participating in peaceful demonstrations.
-                </p>
-              </div>
-            </div>
+                <CardTitle>Get Connected</CardTitle>
+                <CardDescription>
+                  Receive contact information from interested lawyers and connect directly to discuss your case.
+                </CardDescription>
+              </CardHeader>
+            </Card>
           </div>
-          
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-            <Link
-              href="/know-your-rights"
-              className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 to-orange-500 text-black px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:from-amber-400 hover:to-orange-400 shadow-2xl hover:shadow-amber-500/50 transform hover:-translate-y-1 hover:scale-105"
-            >
-              <span className="text-2xl">⚖️</span>
-              Know Your Rights
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full blur opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-            </Link>
-            <Link
-              href="/organize"
-              className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:from-purple-400 hover:to-pink-400 shadow-2xl hover:shadow-purple-500/50 transform hover:-translate-y-1 hover:scale-105"
-            >
-              <span className="text-2xl">📢</span>
-              Organize a Protest
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-            </Link>
-          </div>
-          
-          {/* User Status Section */}
-          <div className="max-w-4xl mx-auto">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-600 to-slate-800 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm rounded-2xl p-8 border border-slate-600/40 hover:border-slate-500/50 transition-all duration-300">
-                <div className="text-center mb-6">
-                  <p className="text-2xl font-semibold text-emerald-400 mb-2">
-                    {hello ? hello.greeting : "Loading tRPC query..."}
-                  </p>
-                </div>
-
-                <div className="flex flex-col items-center justify-center gap-6">
-                  <UserStatusHeader session={session} />
-                  
-                  {session?.user && (
-                    <p className="text-sm text-gray-500 bg-slate-800/50 px-3 py-1 rounded-full inline-block">
-                      User ID: {session.user.id}
-                    </p>
-                  )}
-                  
-                  <AuthButtons session={session} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {session?.user && (
-            <div className="mt-16 max-w-4xl mx-auto">
-              <LatestPost />
-            </div>
-          )}
         </div>
-      </main>
-    </HydrateClient>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                For Those Seeking Legal Aid
+              </h2>
+              <div className="space-y-6">
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-sm">✓</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg text-gray-900">Free Case Submission</h3>
+                    <p className="text-gray-600">Submit your legal case details at no cost and reach qualified attorneys.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-sm">✓</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg text-gray-900">Track Case Status</h3>
+                    <p className="text-gray-600">Monitor your case progress and see when lawyers express interest.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-sm">✓</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg text-gray-900">Direct Communication</h3>
+                    <p className="text-gray-600">Connect directly with interested lawyers to discuss your legal needs.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                For Legal Professionals
+              </h2>
+              <div className="space-y-6">
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-sm">✓</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg text-gray-900">Verified Profiles</h3>
+                    <p className="text-gray-600">Complete verification process to build trust with aid seekers.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-sm">✓</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg text-gray-900">Filter by Expertise</h3>
+                    <p className="text-gray-600">Browse cases by legal category to find ones matching your expertise.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-sm">✓</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg text-gray-900">Choose Your Cases</h3>
+                    <p className="text-gray-600">Select which cases to take on based on your availability and expertise.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-blue-600">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Ready to Get Started?
+          </h2>
+          <p className="text-xl text-blue-100 mb-8">
+            Join our community and help bridge the justice gap.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/signup">
+              <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg">
+                Get Started Today
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
