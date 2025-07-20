@@ -1,12 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, ChevronUp, AlertTriangle, Phone, ExternalLink } from "lucide-react";
+import { AlertTriangle, Phone, ExternalLink, ChevronDown } from "lucide-react";
 import Link from "next/link";
+
+// Shadcn UI components
+import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "~/components/ui/accordion";
+import { Badge } from "~/components/ui/badge";
 
 // Country rights data structure
 const countryRights = {
   US: {
+    flag: "🇺🇸",
+    name: "United States",
     title: "Know Your Rights in the United States",
     sections: [
       {
@@ -71,6 +80,8 @@ const countryRights = {
     ],
   },
   UK: {
+    flag: "🇬🇧",
+    name: "United Kingdom",
     title: "Know Your Rights in the United Kingdom",
     sections: [
       {
@@ -121,6 +132,8 @@ const countryRights = {
     ],
   },
   Germany: {
+    flag: "🇩🇪",
+    name: "Germany",
     title: "Know Your Rights in Germany",
     sections: [
       {
@@ -162,6 +175,8 @@ const countryRights = {
     ],
   },
   France: {
+    flag: "🇫🇷",
+    name: "France",
     title: "Know Your Rights in France",
     sections: [
       {
@@ -202,6 +217,8 @@ const countryRights = {
     ],
   },
   Canada: {
+    flag: "🇨🇦",
+    name: "Canada",
     title: "Know Your Rights in Canada",
     sections: [
       {
@@ -242,6 +259,8 @@ const countryRights = {
     ],
   },
   Australia: {
+    flag: "🇦🇺",
+    name: "Australia",
     title: "Know Your Rights in Australia",
     sections: [
       {
@@ -287,67 +306,62 @@ type Country = keyof typeof countryRights;
 
 export default function KnowYourRightsPage() {
   const [selectedCountry, setSelectedCountry] = useState<Country>('US');
-  const [expandedSections, setExpandedSections] = useState<Set<number>>(new Set([0]));
-
-  const toggleSection = (index: number) => {
-    const newExpanded = new Set(expandedSections);
-    if (newExpanded.has(index)) {
-      newExpanded.delete(index);
-    } else {
-      newExpanded.add(index);
-    }
-    setExpandedSections(newExpanded);
-  };
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const currentRights = countryRights[selectedCountry];
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
+    <div className="min-h-screen bg-gray-50">
       {/* Global Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
+      <header className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+          <div className="flex h-16 items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="bg-blue-600 text-white p-2 rounded-lg">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16l-3-9m3 9l3-9" />
-                </svg>
-              </div>
-              <h1 className="text-2xl font-bold text-gray-900">Legal Compass</h1>
+              <h1 className="text-xl font-bold text-gray-900">Know Your Rights</h1>
             </div>
-            
-            <Link 
-              href="/" 
-              className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
-            >
-              ← Back to Home
-            </Link>
+            <Button variant="ghost" asChild>
+              <Link href="/" className="text-blue-600 hover:text-blue-700 font-medium">
+                ← Back to Home
+              </Link>
+            </Button>
           </div>
         </div>
       </header>
 
       {/* Country Selector */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
             <h2 className="text-lg font-semibold text-gray-900">Select Your Country:</h2>
-            <div className="flex flex-wrap gap-2">
-              {Object.keys(countryRights).map((country) => (
-                <button
-                  key={country}
-                  onClick={() => {
-                    setSelectedCountry(country as Country);
-                    setExpandedSections(new Set([0])); // Reset to first section expanded
-                  }}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                    selectedCountry === country
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {country}
-                </button>
-              ))}
+            <div className="relative">
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="flex items-center justify-between w-64 px-4 py-2 text-left bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl">{countryRights[selectedCountry].flag}</span>
+                  <span className="font-medium text-gray-900">{countryRights[selectedCountry].name}</span>
+                </div>
+                <ChevronDown className={`h-4 w-4 text-gray-500 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {isDropdownOpen && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                  {Object.entries(countryRights).map(([code, country]) => (
+                    <button
+                      key={code}
+                      onClick={() => {
+                        setSelectedCountry(code as Country);
+                        setIsDropdownOpen(false);
+                      }}
+                      className="flex items-center space-x-3 w-full px-4 py-3 text-left hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg transition-colors"
+                    >
+                      <span className="text-2xl">{country.flag}</span>
+                      <span className="font-medium text-gray-900">{country.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -355,109 +369,115 @@ export default function KnowYourRightsPage() {
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Legal Disclaimer */}
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-8">
-          <div className="flex items-start space-x-3">
-            <AlertTriangle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5" />
-            <div>
-              <h3 className="font-semibold text-amber-800 mb-2">Important Legal Disclaimer</h3>
-              <p className="text-amber-700 text-sm leading-relaxed">
-                This information is for general guidance only and does not constitute legal advice. 
-                Laws and procedures can change frequently and vary by jurisdiction. Always consult 
-                with a qualified legal professional for specific legal situations.
-              </p>
-            </div>
-          </div>
-        </div>
-
         {/* Country Title */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">{currentRights.title}</h1>
-          <p className="text-gray-600">Understanding your rights during protests and legal interactions</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">{currentRights.title}</h1>
+          <p className="text-xl text-gray-600">Understanding your rights during protests and legal interactions</p>
         </div>
 
         {/* Rights Sections */}
-        <div className="space-y-4 mb-8">
-          {currentRights.sections.map((section, index) => (
-            <div key={index} className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-              <button
-                onClick={() => toggleSection(index)}
-                className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-              >
-                <h2 className="text-xl font-semibold text-gray-900">{section.heading}</h2>
-                {expandedSections.has(index) ? (
-                  <ChevronUp className="w-5 h-5 text-gray-500" />
-                ) : (
-                  <ChevronDown className="w-5 h-5 text-gray-500" />
-                )}
-              </button>
-              
-              {expandedSections.has(index) && (
-                <div className="px-6 pb-6">
-                  <ul className="space-y-3">
-                    {section.points.map((point, pointIndex) => (
-                      <li key={pointIndex} className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-2"></div>
-                        <p 
-                          className="text-gray-700 leading-relaxed"
-                          dangerouslySetInnerHTML={{
-                            __html: point.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-900">$1</strong>')
-                          }}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        <Card className="mb-8 bg-white border border-gray-200 shadow-sm">
+          <CardHeader className="px-6 pt-6">
+            <CardTitle className="text-xl font-bold text-gray-900">Your Legal Rights</CardTitle>
+            <CardDescription className="text-gray-600">
+              Click on each section to expand and learn about your specific rights
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="px-6 pb-6">
+            <Accordion type="multiple" defaultValue={["item-0"]} className="w-full">
+              {currentRights.sections.map((section, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="border-b border-gray-200">
+                  <AccordionTrigger className="text-left py-4 hover:bg-gray-50 rounded-lg px-2 font-semibold text-gray-900">
+                    {section.heading}
+                  </AccordionTrigger>
+                  <AccordionContent className="px-2 pb-4">
+                    <div className="space-y-3">
+                      {section.points.map((point, pointIndex) => (
+                        <div key={pointIndex} className="flex items-start space-x-3">
+                          <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-2"></div>
+                          <p 
+                            className="text-sm leading-relaxed text-gray-700"
+                            dangerouslySetInnerHTML={{
+                              __html: point.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-900">$1</strong>')
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </CardContent>
+        </Card>
 
         {/* Important Numbers/Resources */}
-        <div className="bg-blue-50 rounded-xl border border-blue-200 p-6">
-          <div className="flex items-center space-x-2 mb-4">
-            <Phone className="w-5 h-5 text-blue-600" />
-            <h2 className="text-xl font-semibold text-blue-900">Important Resources & Contacts</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {currentRights.importantNumbers.map((resource, index) => (
-              <div key={index} className="flex items-center space-x-2">
-                <ExternalLink className="w-4 h-4 text-blue-600 flex-shrink-0" />
-                <span className="text-blue-800 text-sm">{resource}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Card className="mb-8 bg-white border border-gray-200 shadow-sm">
+          <CardHeader className="px-6 pt-6">
+            <div className="flex items-center space-x-2">
+              <Phone className="h-5 w-5 text-blue-600" />
+              <CardTitle className="text-xl font-bold text-gray-900">Important Resources & Contacts</CardTitle>
+            </div>
+            <CardDescription className="text-gray-600">
+              Keep these resources handy for legal assistance and support
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="px-6 pb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {currentRights.importantNumbers.map((resource, index) => (
+                <div key={index} className="flex items-center space-x-2 p-3 bg-gray-100 rounded-lg">
+                  <ExternalLink className="h-4 w-4 text-gray-500 flex-shrink-0" />
+                  <span className="text-sm text-gray-800">{resource}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Need Legal Assistance Section */}
-        <div className="text-center mt-8 bg-white rounded-xl p-8 border border-gray-200 shadow-sm">
-          <h3 className="text-xl font-semibold text-gray-900 mb-3">Need Professional Legal Assistance?</h3>
-          <p className="text-gray-600 mb-4">
-            If you're facing legal issues, it's important to consult with qualified legal professionals 
-            who can provide advice specific to your situation and jurisdiction.
-          </p>
-          <div className="text-sm text-gray-500">
-            Connect with pro-bono lawyers and legal aid organizations in your region.
-          </div>
-        </div>
+        <Card className="bg-white border border-gray-200 shadow-sm">
+          <CardHeader className="text-center px-6 pt-6">
+            <CardTitle className="text-xl font-bold text-gray-900">Need Professional Legal Assistance?</CardTitle>
+            <CardDescription className="text-gray-600">
+              If you're facing legal issues, it's important to consult with qualified legal professionals 
+              who can provide advice specific to your situation and jurisdiction.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-center px-6 pb-6">
+            <Badge variant="secondary" className="text-sm bg-gray-200 text-gray-800">
+              Connect with pro-bono lawyers and legal aid organizations in your region
+            </Badge>
+          </CardContent>
+        </Card>
       </main>
 
+      {/* Small Legal Disclaimer */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <div className="flex items-center justify-center space-x-2 text-xs text-gray-500 bg-gray-100 rounded-lg p-3">
+          <AlertTriangle className="h-3 w-3 text-gray-400 flex-shrink-0" />
+          <span>
+            This information is for general guidance only and does not constitute legal advice. 
+            Always consult with a qualified legal professional for specific legal situations.
+          </span>
+        </div>
+      </div>
+
       {/* Footer */}
-      <footer className="bg-gray-900 text-white mt-16">
+      <footer className="bg-white border-t border-gray-200 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
             <div className="mb-4 md:mb-0">
-              <p className="text-sm text-gray-400">
-                © 2025 Legal Compass. All rights reserved.
+              <p className="text-sm text-gray-500">
+                © 2025 Know Your Rights. All rights reserved.
               </p>
             </div>
-            <div className="flex space-x-6">
-              <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
-                Full Legal Disclaimer
-              </a>
-              <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">
-                Contact Us
-              </a>
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="#" className="text-gray-500 hover:text-gray-700">Full Legal Disclaimer</Link>
+              </Button>
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="#" className="text-gray-500 hover:text-gray-700">Contact Us</Link>
+              </Button>
             </div>
           </div>
         </div>
