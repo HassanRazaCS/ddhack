@@ -8,7 +8,7 @@ export function Footer() {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <span className="text-2xl">⚖️</span>
-              <span className="text-xl font-bold text-gray-900">Legal Aid Connect</span>
+              <span className="text-xl font-bold text-gray-900">Advocado</span>
             </div>
             <p className="text-gray-600">
               Connecting individuals in need of legal aid with lawyers willing to provide pro bono services.
@@ -76,7 +76,7 @@ export function Footer() {
               </Link>
             </div>
             <p className="text-gray-500 text-sm mt-4 md:mt-0">
-              © 2024 Legal Aid Connect. All rights reserved.
+              © 2024 Advocado. All rights reserved.
             </p>
           </div>
         </div>
