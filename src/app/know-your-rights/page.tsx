@@ -526,57 +526,53 @@ export default function KnowYourRightsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Country Selector */}
-      <div className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
-        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-end space-x-4">
-            <div className="relative">
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex w-64 items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-3 text-left shadow-sm hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              >
-                <div className="flex items-center space-x-3">
-                  <span className="text-2xl">
-                    {countryRights[selectedCountry].flag}
-                  </span>
-                  <span className="font-medium text-gray-900">
-                    {countryRights[selectedCountry].name}
-                  </span>
-                </div>
-                <ChevronDown
-                  className={`h-4 w-4 text-gray-500 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
-                />
-              </button>
-
-              {isDropdownOpen && (
-                <div className="absolute top-full right-0 left-0 z-10 mt-1 rounded-lg border border-gray-200 bg-white shadow-lg">
-                  {Object.entries(countryRights).map(([code, country]) => (
-                    <button
-                      key={code}
-                      onClick={() => {
-                        setSelectedCountry(code as Country);
-                        setIsDropdownOpen(false);
-                      }}
-                      className="flex w-full items-center space-x-3 px-4 py-3 text-left transition-colors first:rounded-t-lg last:rounded-b-lg hover:bg-gray-50"
-                    >
-                      <span className="text-2xl">{country.flag}</span>
-                      <span className="font-medium text-gray-900">
-                        {country.name}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-end space-x-4">
+          <div className="relative">
             <button
-              onClick={handlePrint}
-              className="flex items-center justify-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm transition-colors hover:border-[#68D466] hover:bg-green-50 focus:border-[#68D466] focus:ring-2 focus:ring-[#68D466] focus:outline-none"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex w-64 items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-3 text-left shadow-sm hover:border-gray-400 focus:border-[#68D466] focus:ring-2 focus:ring-[#68D466] focus:outline-none"
             >
-              <span className="text-lg">🖨</span>
-              <span className="font-medium text-gray-900">
-                Print Cheat Sheet
-              </span>
+              <div className="flex items-center space-x-3">
+                <span className="text-2xl">
+                  {countryRights[selectedCountry].flag}
+                </span>
+                <span className="font-medium text-gray-900">
+                  {countryRights[selectedCountry].name}
+                </span>
+              </div>
+              <ChevronDown
+                className={`h-4 w-4 text-gray-500 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+              />
             </button>
+
+            {isDropdownOpen && (
+              <div className="absolute top-full right-0 left-0 z-10 mt-1 rounded-lg border border-gray-200 bg-white shadow-lg">
+                {Object.entries(countryRights).map(([code, country]) => (
+                  <button
+                    key={code}
+                    onClick={() => {
+                      setSelectedCountry(code as Country);
+                      setIsDropdownOpen(false);
+                    }}
+                    className="flex w-full items-center space-x-3 px-4 py-3 text-left transition-colors first:rounded-t-lg last:rounded-b-lg hover:bg-gray-50"
+                  >
+                    <span className="text-2xl">{country.flag}</span>
+                    <span className="font-medium text-gray-900">
+                      {country.name}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
+          <button
+            onClick={handlePrint}
+            className="flex items-center justify-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm transition-colors hover:border-[#68D466] hover:bg-green-50 focus:border-[#68D466] focus:ring-2 focus:ring-[#68D466] focus:outline-none"
+          >
+            <span className="text-lg">🖨</span>
+            <span className="font-medium text-gray-900">Print Cheat Sheet</span>
+          </button>
         </div>
       </div>
 
@@ -665,7 +661,7 @@ export default function KnowYourRightsPage() {
                   rel="noopener noreferrer"
                   className="flex items-center space-x-2 rounded-lg bg-gray-100 p-3 transition-colors hover:bg-gray-200"
                 >
-                  <span className="text-sm text-gray-800 hover:text-blue-600">
+                  <span className="text-sm text-gray-800 hover:text-[#68D466]">
                     {resource.name}
                   </span>
                 </a>

@@ -23,14 +23,14 @@ export default async function Home() {
 
   return (
     // Apply background color and font directly
-    <div className="font-['Newsreader']" style={{ backgroundColor: "#f6f6ed" }}>
+    <div className="bg-[#f6f6ed] font-['Newsreader']">
       <section className="flex items-center justify-center pt-64 pb-72">
         {/* Added px for consistency */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="mb-6 text-5xl leading-tight font-bold text-gray-800 md:text-6xl lg:text-7xl">
             Connecting legal needs with pro bono professionals.
           </h1>
-          <p className="text-xl text-gray-700" style={{ maxWidth: 848 }}>
+          <p className="max-w-7xl text-xl text-gray-700">
             Bridging the justice gap by connecting individuals who need legal
             assistance with lawyers willing to provide pro bono services.
           </p>
@@ -62,11 +62,8 @@ export default async function Home() {
               <CardContent className="p-6">
                 {" "}
                 {/* Added CardContent with padding */}
-                <div
-                  className="mb-4 flex h-16 w-16 items-center justify-center rounded-full"
-                  style={{ backgroundColor: "#E0E0E0" }}
-                >
-                  <span className="text-3xl">📝</span>
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#e1f6e0]">
+                  <span className="pt-1 text-3xl">📝</span>
                 </div>
                 <CardTitle className="mb-2 text-xl font-semibold text-gray-900">
                   Submit Your Case
@@ -81,11 +78,8 @@ export default async function Home() {
             {/* Lawyers Review Card */}
             <Card className="rounded-lg bg-white">
               <CardContent className="p-6">
-                <div
-                  className="mb-4 flex h-16 w-16 items-center justify-center rounded-full"
-                  style={{ backgroundColor: "#E0E0E0" }}
-                >
-                  <span className="text-3xl">🔍</span>
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#e1f6e0]">
+                  <span className="pt-1 text-3xl">🔍</span>
                 </div>
                 <CardTitle className="mb-2 text-xl font-semibold text-gray-900">
                   Lawyers Review
@@ -100,11 +94,8 @@ export default async function Home() {
             {/* Get Connected Card */}
             <Card className="rounded-lg bg-white">
               <CardContent className="p-6">
-                <div
-                  className="mb-4 flex h-16 w-16 items-center justify-center rounded-full"
-                  style={{ backgroundColor: "#E0E0E0" }}
-                >
-                  <span className="text-3xl">🤝</span>
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#e1f6e0]">
+                  <span className="pt-1 text-3xl">🤝</span>
                 </div>
                 <CardTitle className="mb-2 text-xl font-semibold text-gray-900">
                   Get Connected
@@ -128,54 +119,37 @@ export default async function Home() {
               For those Seeking Legal Aid
             </h2>
             <div className="space-y-12">
-              <div className="flex items-center space-x-4">
-                <div
-                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full"
-                  style={{ backgroundColor: "#E0E0E0" }}
-                >
-                  <span className="text-xl">⚪</span>
-                </div>
+              <div className="flex items-center">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">
                     Free Case Submission
                   </h3>
                   <p className="text-gray-600">
                     Submit your legal case details at no cost and reach
-                    qualified attorneys.
+                    qualified attorneys willing to help.
                   </p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <div
-                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full"
-                  style={{ backgroundColor: "#E0E0E0" }}
-                >
-                  <span className="text-xl">⚪</span>
-                </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">
-                    Free Case Submission
+                    Know Your Rights
                   </h3>
                   <p className="text-gray-600">
-                    Submit your legal case details at no cost and reach
-                    qualified attorneys.
+                    Access comprehensive legal rights information for protests
+                    and police interactions across different countries.
                   </p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <div
-                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full"
-                  style={{ backgroundColor: "#E0E0E0" }}
-                >
-                  <span className="text-xl">⚪</span>
-                </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">
-                    Free Case Submission
+                    Track Your Cases
                   </h3>
                   <p className="text-gray-600">
-                    Submit your legal case details at no cost and reach
-                    qualified attorneys.
+                    Monitor the status of your submissions and manage
+                    communications with interested lawyers through your
+                    dashboard.
                   </p>
                 </div>
               </div>
@@ -188,53 +162,35 @@ export default async function Home() {
             </h2>
             <div className="space-y-12">
               <div className="flex items-center space-x-4">
-                <div
-                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full"
-                  style={{ backgroundColor: "#E0E0E0" }}
-                >
-                  <span className="text-xl">⚪</span>
-                </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">
-                    Free Case Submission
+                    Browse Available Cases
                   </h3>
                   <p className="text-gray-600">
-                    Submit your legal case details at no cost and reach
-                    qualified attorneys.
+                    Review cases that match your expertise and choose which ones
+                    you&apos;d like to take on pro bono.
                   </p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <div
-                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full"
-                  style={{ backgroundColor: "#E0E0E0" }}
-                >
-                  <span className="text-xl">⚪</span>
-                </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">
-                    Free Case Submission
+                    Verified Professional Status
                   </h3>
                   <p className="text-gray-600">
-                    Submit your legal case details at no cost and reach
-                    qualified attorneys.
+                    Join our network of verified lawyers and build your pro bono
+                    portfolio while helping those in need.
                   </p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <div
-                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full"
-                  style={{ backgroundColor: "#E0E0E0" }}
-                >
-                  <span className="text-xl">⚪</span>
-                </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">
-                    Free Case Submission
+                    Manage Your Caseload
                   </h3>
                   <p className="text-gray-600">
-                    Submit your legal case details at no cost and reach
-                    qualified attorneys.
+                    Track your active pro bono cases and communicate directly
+                    with clients through your lawyer dashboard.
                   </p>
                 </div>
               </div>
