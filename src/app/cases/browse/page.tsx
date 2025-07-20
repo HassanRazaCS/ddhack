@@ -44,6 +44,11 @@ export default async function BrowseCases() {
           interests: true,
         },
       },
+      interests: {
+        select: {
+          lawyerId: true,
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",
@@ -170,6 +175,7 @@ export default async function BrowseCases() {
                     key={caseData.id} 
                     case={caseData} 
                     userType="LAWYER"
+                    lawyerId={lawyerProfile.id}
                   />
                 ))}
               </div>
