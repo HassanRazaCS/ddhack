@@ -1,10 +1,8 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Button } from "~/components/ui/button";
 import {
   Card,
+  CardContent,
   CardDescription,
-  CardHeader,
   CardTitle,
 } from "~/components/ui/card";
 import { auth } from "~/server/auth";
@@ -41,7 +39,8 @@ export default async function Home() {
 
       <hr className="mx-auto max-w-7xl border-gray-300" />
 
-      <section className="py-32">
+      {/* How It Works Section */}
+      <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
@@ -54,9 +53,19 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <Card className="flex flex-col items-start rounded-lg border-none bg-white p-6 shadow-none">
-              <CardHeader className="mb-4 p-0">
-                <div>
+            {/* Submit Your Case Card */}
+            {/* Changed structure to use CardContent for the main content area,
+                removed flex-col items-start from Card to rely on Shadcn's internal layout for width. */}
+            <Card className="rounded-lg bg-white">
+              {" "}
+              {/* Kept bg-white and rounded-lg */}
+              <CardContent className="p-6">
+                {" "}
+                {/* Added CardContent with padding */}
+                <div
+                  className="mb-4 flex h-16 w-16 items-center justify-center rounded-full"
+                  style={{ backgroundColor: "#E0E0E0" }}
+                >
                   <span className="text-3xl">📝</span>
                 </div>
                 <CardTitle className="mb-2 text-xl font-semibold text-gray-900">
@@ -66,12 +75,16 @@ export default async function Home() {
                   Create a detailed description of your legal issue and the type
                   of assistance you need.
                 </CardDescription>
-              </CardHeader>
+              </CardContent>
             </Card>
 
-            <Card className="flex flex-col items-start rounded-lg border-none bg-white p-6 shadow-none">
-              <CardHeader className="mb-4 p-0">
-                <div>
+            {/* Lawyers Review Card */}
+            <Card className="rounded-lg bg-white">
+              <CardContent className="p-6">
+                <div
+                  className="mb-4 flex h-16 w-16 items-center justify-center rounded-full"
+                  style={{ backgroundColor: "#E0E0E0" }}
+                >
                   <span className="text-3xl">🔍</span>
                 </div>
                 <CardTitle className="mb-2 text-xl font-semibold text-gray-900">
@@ -81,12 +94,16 @@ export default async function Home() {
                   Verified legal professionals review available cases and
                   express interest in those they can help with.
                 </CardDescription>
-              </CardHeader>
+              </CardContent>
             </Card>
 
-            <Card className="flex flex-col items-start rounded-lg border-none bg-white p-6 shadow-none">
-              <CardHeader className="mb-4 p-0">
-                <div>
+            {/* Get Connected Card */}
+            <Card className="rounded-lg bg-white">
+              <CardContent className="p-6">
+                <div
+                  className="mb-4 flex h-16 w-16 items-center justify-center rounded-full"
+                  style={{ backgroundColor: "#E0E0E0" }}
+                >
                   <span className="text-3xl">🤝</span>
                 </div>
                 <CardTitle className="mb-2 text-xl font-semibold text-gray-900">
@@ -96,7 +113,7 @@ export default async function Home() {
                   Receive contact information from interested lawyers and
                   connect directly to discuss your case.
                 </CardDescription>
-              </CardHeader>
+              </CardContent>
             </Card>
           </div>
         </div>
