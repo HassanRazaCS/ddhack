@@ -42,7 +42,7 @@ export function LegalRightsChatbot() {
   return (
     <>
       {/* Floating Chat Button */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed right-6 bottom-6 z-50">
         <Button
           onClick={() => setIsOpen(true)}
           className="h-14 w-14 rounded-full bg-blue-600 shadow-lg transition-all duration-300 hover:bg-blue-700 hover:shadow-xl"
@@ -70,14 +70,18 @@ export function LegalRightsChatbot() {
                   ⚖️
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold">Legal Rights Assistant</h3>
-                  <p className="text-xs text-blue-100">Ask about your legal rights</p>
+                  <h3 className="text-sm font-semibold">
+                    Legal Rights Assistant
+                  </h3>
+                  <p className="text-xs text-blue-100">
+                    Ask about your legal rights
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-1">
                 <button
                   onClick={clearChat}
-                  disabled={messages.length === 0}
+                  disabled={!messages.length}
                   className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-500 transition-colors hover:bg-blue-400 disabled:opacity-50"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
@@ -97,10 +101,13 @@ export function LegalRightsChatbot() {
                 {messages.length === 0 ? (
                   <div className="space-y-3 text-center">
                     <div className="text-sm text-gray-600">
-                      👋 Hi! I&apos;m here to help you understand your legal rights.
+                      👋 Hi! I&apos;m here to help you understand your legal
+                      rights.
                     </div>
                     <div className="space-y-2">
-                      <div className="text-xs font-medium text-gray-400">Try asking:</div>
+                      <div className="text-xs font-medium text-gray-400">
+                        Try asking:
+                      </div>
                       {sampleQuestions.slice(0, 3).map((question, idx) => (
                         <button
                           key={idx}
@@ -110,9 +117,12 @@ export function LegalRightsChatbot() {
                             } as React.ChangeEvent<HTMLInputElement>);
                             // Small delay to ensure input is set
                             setTimeout(() => {
-                              const form = document.querySelector('form');
+                              const form = document.querySelector("form");
                               if (form) {
-                                const event = new Event('submit', { bubbles: true, cancelable: true });
+                                const event = new Event("submit", {
+                                  bubbles: true,
+                                  cancelable: true,
+                                });
                                 form.dispatchEvent(event);
                               }
                             }, 10);
@@ -124,7 +134,8 @@ export function LegalRightsChatbot() {
                       ))}
                     </div>
                     <div className="mt-4 rounded-md bg-yellow-50 p-2 text-xs text-yellow-800">
-                      ⚠️ AI can make mistakes. Consult a lawyer for specific legal advice.
+                      ⚠️ AI can make mistakes. Consult a lawyer for specific
+                      legal advice.
                     </div>
                   </div>
                 ) : (
@@ -133,7 +144,9 @@ export function LegalRightsChatbot() {
                       <div
                         key={message.id}
                         className={`flex ${
-                          message.role === "user" ? "justify-end" : "justify-start"
+                          message.role === "user"
+                            ? "justify-end"
+                            : "justify-start"
                         }`}
                       >
                         <div
@@ -144,18 +157,23 @@ export function LegalRightsChatbot() {
                           }`}
                         >
                           {message.role === "user" ? (
-                            <div className="whitespace-pre-wrap">{message.content}</div>
+                            <div className="whitespace-pre-wrap">
+                              {message.content}
+                            </div>
                           ) : (
                             <div>
                               <ChatMarkdown>{message.content}</ChatMarkdown>
                               <div className="mt-2 rounded bg-yellow-50 p-1.5 text-xs text-yellow-800">
-                                ⚠️ AI advice is educational. Consult a lawyer for specific cases.
+                                ⚠️ AI advice is educational. Consult a lawyer
+                                for specific cases.
                               </div>
                             </div>
                           )}
                           <div
                             className={`mt-1 text-xs ${
-                              message.role === "user" ? "text-blue-200" : "text-gray-500"
+                              message.role === "user"
+                                ? "text-blue-200"
+                                : "text-gray-500"
                             }`}
                           >
                             {formatDate(message.createdAt ?? new Date())}
@@ -187,7 +205,7 @@ export function LegalRightsChatbot() {
                   value={input}
                   onChange={handleInputChange}
                   placeholder="Ask about your legal rights..."
-                  className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
                   disabled={isLoading}
                 />
                 <Button
