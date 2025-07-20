@@ -9,7 +9,8 @@ import { Providers } from "~/components/providers";
 
 export const metadata: Metadata = {
   title: "Advocado - Connecting Legal Needs with Pro Bono Professionals",
-  description: "Advocado bridges the justice gap by connecting individuals who need legal assistance with lawyers willing to provide pro bono services.",
+  description:
+    "Advocado bridges the justice gap by connecting individuals who need legal assistance with lawyers willing to provide pro bono services.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
@@ -26,11 +27,9 @@ export default function RootLayout({
       <body className="min-h-screen bg-gray-50">
         <TRPCReactProvider>
           <Providers>
-            <div className="flex flex-col min-h-screen">
+            <div className="flex min-h-screen flex-col">
               <Navbar />
-              <main className="flex-grow">
-                {children}
-              </main>
+              <main className="flex-grow">{children}</main>
               <Footer />
             </div>
           </Providers>
