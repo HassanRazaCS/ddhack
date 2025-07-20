@@ -4,6 +4,7 @@ import { useChat } from "ai/react";
 import { MessageCircle, RotateCcw, Send, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
 import { ChatMarkdown } from "./chat-markdown";
 
 export function LegalRightsChatbot() {
@@ -79,19 +80,23 @@ export function LegalRightsChatbot() {
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                <button
+                <Button
                   onClick={clearChat}
                   disabled={!messages.length}
-                  className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-500 transition-colors hover:bg-blue-400 disabled:opacity-50"
+                  size="icon"
+                  variant="ghost"
+                  className="h-7 w-7 rounded-full bg-blue-500 text-white hover:bg-blue-400 disabled:opacity-50"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => setIsOpen(false)}
-                  className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-500 transition-colors hover:bg-blue-400"
+                  size="icon"
+                  variant="ghost"
+                  className="h-7 w-7 rounded-full bg-blue-500 text-white hover:bg-blue-400"
                 >
                   <X className="h-3.5 w-3.5" />
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -109,7 +114,7 @@ export function LegalRightsChatbot() {
                         Try asking:
                       </div>
                       {sampleQuestions.slice(0, 3).map((question, idx) => (
-                        <button
+                        <Button
                           key={idx}
                           onClick={() => {
                             handleInputChange({
@@ -127,10 +132,11 @@ export function LegalRightsChatbot() {
                               }
                             }, 10);
                           }}
-                          className="block w-full rounded-md bg-gray-50 p-2 text-left text-xs transition-colors hover:bg-gray-100"
+                          variant="ghost"
+                          className="h-auto w-full justify-start rounded-md bg-gray-50 p-2 text-left text-xs transition-colors hover:bg-gray-100"
                         >
                           {question}
-                        </button>
+                        </Button>
                       ))}
                     </div>
                     <div className="mt-4 rounded-md bg-yellow-50 p-2 text-xs text-yellow-800">
@@ -201,11 +207,11 @@ export function LegalRightsChatbot() {
             {/* Input Area */}
             <div className="border-t bg-gray-50 p-3">
               <form onSubmit={handleSubmit} className="flex gap-2">
-                <input
+                <Input
                   value={input}
                   onChange={handleInputChange}
                   placeholder="Ask about your legal rights..."
-                  className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                  className="flex-1"
                   disabled={isLoading}
                 />
                 <Button

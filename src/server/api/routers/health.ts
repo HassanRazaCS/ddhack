@@ -6,7 +6,7 @@ export const healthRouter = createTRPCRouter({
       return {
         status: "ok",
         timestamp: new Date().toISOString(),
-        message: "Legal Aid Connect API is running",
+        message: "Advocado API is running",
       };
     }),
 });

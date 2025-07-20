@@ -14,7 +14,7 @@ export function Navbar() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
               <span className="text-2xl">⚖️</span>
-              <span className="text-xl font-bold text-gray-900">Legal Aid Connect</span>
+              <span className="text-xl font-bold text-gray-900">Advocado</span>
             </Link>
           </div>
 
@@ -39,12 +39,11 @@ export function Navbar() {
                       >
                         My Cases
                       </Link>
-                      <Link
-                        href="/cases/new"
-                        className="bg-blue-600 text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium"
-                      >
-                        Create Case
-                      </Link>
+                      <Button asChild size="sm">
+                        <Link href="/cases/new">
+                          Create Case
+                        </Link>
+                      </Button>
                     </>
                   ) : session.user.userType === "LAWYER" ? (
                     <Link
@@ -90,7 +89,7 @@ export function Navbar() {
                     </span>
                   </div>
                   <Button
-                    variant="secondary"
+                    variant="outline"
                     size="sm"
                     onClick={() => signOut()}
                   >
@@ -118,16 +117,16 @@ export function Navbar() {
                 >
                   About
                 </Link>
-                <Link href="/login">
-                  <Button variant="secondary" size="sm">
+                <Button asChild variant="outline" size="sm">
+                  <Link href="/login">
                     Sign In
-                  </Button>
-                </Link>
-                <Link href="/signup">
-                  <Button variant="primary" size="sm">
+                  </Link>
+                </Button>
+                <Button asChild size="sm">
+                  <Link href="/signup">
                     Get Started
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
               </div>
             )}
           </div>
