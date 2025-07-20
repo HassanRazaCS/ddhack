@@ -2,6 +2,7 @@ import Link from "next/link";
 import { PageHeader } from "~/app/_components/page-header";
 import { RightsCard } from "~/app/_components/rights-card";
 import { ArrestCard } from "~/app/_components/arrest-card";
+import { LegalRightsChatbot } from "~/app/_components/legal-rights-chatbot";
 import { rightsData } from "~/app/_data/rights-data";
 
 export default function KnowYourRightsPage() {
@@ -93,6 +94,9 @@ export default function KnowYourRightsPage() {
           </div>
         </div>
       </main>
+      
+      {/* Legal Rights Chatbot */}
+      <LegalRightsChatbot />
     </div>
   );
 }

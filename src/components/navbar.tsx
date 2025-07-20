@@ -63,6 +63,12 @@ export function Navbar() {
                   )}
 
                   <Link
+                    href="/know-your-rights"
+                    className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Know Your Rights
+                  </Link>
+                  <Link
                     href="/about"
                     className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
                   >
@@ -99,6 +105,12 @@ export function Navbar() {
                   className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Home
+                </Link>
+                <Link
+                  href="/know-your-rights"
+                  className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Know Your Rights
                 </Link>
                 <Link
                   href="/about"
