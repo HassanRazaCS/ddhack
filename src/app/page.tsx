@@ -1,7 +1,10 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Button } from "~/components/ui/button";
-import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "~/components/ui/card";
 import { auth } from "~/server/auth";
 
 export default async function Home() {
@@ -19,180 +22,182 @@ export default async function Home() {
   }
 
   return (
-    <div className="bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Connecting Legal Needs with{" "}
-              <span className="text-blue-200">Pro Bono Professionals</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
-              Bridging the justice gap by connecting individuals who need legal assistance 
-              with lawyers willing to provide pro bono services.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/signup">
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg">
-                  🙋‍♂️ Find Legal Aid
-                </Button>
-              </Link>
-              <Link href="/signup">
-                <Button size="lg" variant="secondary" className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg">
-                  ⚖️ Offer Pro Bono Services
-                </Button>
-              </Link>
-            </div>
-          </div>
+    // Apply background color and font directly
+    <div className="bg-[#f6f6ed] font-['Newsreader']">
+      <section
+        className="flex items-center justify-center"
+        style={{ height: "calc(100vh - 4rem)" }}
+      >
+        {/* Added px for consistency */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h1 className="mb-6 text-5xl leading-tight font-bold text-gray-800 md:text-6xl lg:text-7xl">
+            Connecting legal needs with pro bono professionals.
+          </h1>
+          <p className="max-w-7xl text-xl text-gray-700">
+            Bridging the justice gap by connecting individuals who need legal
+            assistance with lawyers willing to provide pro bono services.
+          </p>
         </div>
       </section>
+
+      <hr className="mx-auto max-w-7xl border-gray-300" />
 
       {/* How It Works Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              How It Works
+      <section className="py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12">
+            <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
+              How it works
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Our simple process connects those in need with legal professionals ready to help.
+            <p className="max-w-xl text-xl text-gray-600">
+              Our simple process connects those in need with legal professionals
+              ready to help.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* For Aid Seekers */}
-            <Card className="text-center">
-              <CardHeader>
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">📝</span>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {/* Submit Your Case Card */}
+            {/* Changed structure to use CardContent for the main content area,
+                removed flex-col items-start from Card to rely on Shadcn's internal layout for width. */}
+            <Card className="rounded-lg bg-white">
+              {" "}
+              {/* Kept bg-white and rounded-lg */}
+              <CardContent className="p-6">
+                {" "}
+                {/* Added CardContent with padding */}
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#e1f6e0]">
+                  <span className="pt-1 text-3xl">📝</span>
                 </div>
-                <CardTitle>Submit Your Case</CardTitle>
-                <CardDescription>
-                  Create a detailed description of your legal issue and the type of assistance you need.
+                <CardTitle className="mb-2 text-xl font-semibold text-gray-900">
+                  Submit Your Case
+                </CardTitle>
+                <CardDescription className="text-left text-base text-gray-600">
+                  Create a detailed description of your legal issue and the type
+                  of assistance you need.
                 </CardDescription>
-              </CardHeader>
+              </CardContent>
             </Card>
 
-            <Card className="text-center">
-              <CardHeader>
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">🔍</span>
+            {/* Lawyers Review Card */}
+            <Card className="rounded-lg bg-white">
+              <CardContent className="p-6">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#e1f6e0]">
+                  <span className="pt-1 text-3xl">🔍</span>
                 </div>
-                <CardTitle>Lawyers Review</CardTitle>
-                <CardDescription>
-                  Verified legal professionals review available cases and express interest in those they can help with.
+                <CardTitle className="mb-2 text-xl font-semibold text-gray-900">
+                  Lawyers Review
+                </CardTitle>
+                <CardDescription className="text-left text-base text-gray-600">
+                  Verified legal professionals review available cases and
+                  express interest in those they can help with.
                 </CardDescription>
-              </CardHeader>
+              </CardContent>
             </Card>
 
-            <Card className="text-center">
-              <CardHeader>
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">🤝</span>
+            {/* Get Connected Card */}
+            <Card className="rounded-lg bg-white">
+              <CardContent className="p-6">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#e1f6e0]">
+                  <span className="pt-1 text-3xl">🤝</span>
                 </div>
-                <CardTitle>Get Connected</CardTitle>
-                <CardDescription>
-                  Receive contact information from interested lawyers and connect directly to discuss your case.
+                <CardTitle className="mb-2 text-xl font-semibold text-gray-900">
+                  Get Connected
+                </CardTitle>
+                <CardDescription className="text-left text-base text-gray-600">
+                  Receive contact information from interested lawyers and
+                  connect directly to discuss your case.
                 </CardDescription>
-              </CardHeader>
+              </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                For Those Seeking Legal Aid
-              </h2>
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-sm">✓</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg text-gray-900">Free Case Submission</h3>
-                    <p className="text-gray-600">Submit your legal case details at no cost and reach qualified attorneys.</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-sm">✓</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg text-gray-900">Track Case Status</h3>
-                    <p className="text-gray-600">Monitor your case progress and see when lawyers express interest.</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-sm">✓</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg text-gray-900">Direct Communication</h3>
-                    <p className="text-gray-600">Connect directly with interested lawyers to discuss your legal needs.</p>
-                  </div>
+      <hr className="mx-auto max-w-7xl border-gray-300" />
+
+      <section className="py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
+          <div>
+            <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">
+              For those Seeking Legal Aid
+            </h2>
+            <div className="space-y-12">
+              <div className="flex items-center">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Free Case Submission
+                  </h3>
+                  <p className="text-gray-600">
+                    Submit your legal case details at no cost and reach
+                    qualified attorneys willing to help.
+                  </p>
                 </div>
               </div>
-            </div>
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                For Legal Professionals
-              </h2>
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-sm">✓</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg text-gray-900">Verified Profiles</h3>
-                    <p className="text-gray-600">Complete verification process to build trust with aid seekers.</p>
-                  </div>
+              <div className="flex items-center space-x-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Know Your Rights
+                  </h3>
+                  <p className="text-gray-600">
+                    Access comprehensive legal rights information for protests
+                    and police interactions across different countries.
+                  </p>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-sm">✓</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg text-gray-900">Filter by Expertise</h3>
-                    <p className="text-gray-600">Browse cases by legal category to find ones matching your expertise.</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-sm">✓</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg text-gray-900">Choose Your Cases</h3>
-                    <p className="text-gray-600">Select which cases to take on based on your availability and expertise.</p>
-                  </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Track Your Cases
+                  </h3>
+                  <p className="text-gray-600">
+                    Monitor the status of your submissions and manage
+                    communications with interested lawyers through your
+                    dashboard.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-blue-600">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to Get Started?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Join our community and help bridge the justice gap.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/signup">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg">
-                Get Started Today
-              </Button>
-            </Link>
+          <div>
+            <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">
+              For Legal Professionals
+            </h2>
+            <div className="space-y-12">
+              <div className="flex items-center space-x-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Browse Available Cases
+                  </h3>
+                  <p className="text-gray-600">
+                    Review cases that match your expertise and choose which ones
+                    you&apos;d like to take on pro bono.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Verified Professional Status
+                  </h3>
+                  <p className="text-gray-600">
+                    Join our network of verified lawyers and build your pro bono
+                    portfolio while helping those in need.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Manage Your Caseload
+                  </h3>
+                  <p className="text-gray-600">
+                    Track your active pro bono cases and communicate directly
+                    with clients through your lawyer dashboard.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

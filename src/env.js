@@ -12,7 +12,10 @@ export const env = createEnv({
         ? z.string()
         : z.string().optional(),
     DATABASE_URL: z.string().url(),
-    GOOGLE_GENERATIVE_AI_API_KEY: z.string().min(1),
+    GOOGLE_GENERATIVE_AI_API_KEY:
+      process.env.NODE_ENV === "production"
+        ? z.string().min(1)
+        : z.string().min(1).optional(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),

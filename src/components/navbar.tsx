@@ -1,6 +1,7 @@
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
 
@@ -8,15 +9,21 @@ export function Navbar() {
   const { data: session, status } = useSession();
 
   return (
-    <nav className="border-b bg-white shadow-sm">
+    <nav className="sticky top-0 z-50 border-b bg-white shadow-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 justify-between">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <span className="text-2xl">⚖️</span>
+              <Image
+                src="/logo.svg"
+                alt="Advocado"
+                width={32}
+                height={37}
+                className="h-8 w-auto"
+              />
               <span className="text-xl font-bold text-gray-900">Advocado</span>
             </Link>
-          </div>
+            </div>
 
           <div className="flex items-center space-x-4">
             {status === "loading" ? (
