@@ -141,7 +141,7 @@ export function CaseCard({
               </Button>
               {caseData._count.interests > 0 && (
                 <Button size="sm" onClick={() => setShowInterested(!showInterested)}>
-                  {showInterested ? "Hide" : "View"} Interested Lawyers
+                  {showInterested ? "Hide Interested Lawyers" : "View Interested Lawyers"}
                 </Button>
               )}
             </div>
@@ -160,7 +160,7 @@ export function CaseCard({
           )}
         </div>
         {showInterested && interestedLawyers.data && (
-          <InterestedLawyers lawyers={interestedLawyers.data} />
+          <InterestedLawyers lawyers={interestedLawyers.data} isOpen={showInterested} />
         )}
       </CardContent>
     </Card>
