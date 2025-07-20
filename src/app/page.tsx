@@ -24,7 +24,10 @@ export default async function Home() {
   return (
     // Apply background color and font directly
     <div className="bg-[#f6f6ed] font-['Newsreader']">
-      <section className="flex items-center justify-center pt-64 pb-72">
+      <section
+        className="flex items-center justify-center"
+        style={{ height: "calc(100vh - 4rem)" }}
+      >
         {/* Added px for consistency */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="mb-6 text-5xl leading-tight font-bold text-gray-800 md:text-6xl lg:text-7xl">
