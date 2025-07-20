@@ -1,5 +1,9 @@
+"use client";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
+import { api } from "~/trpc/react";
+import { useRouter } from "next/navigation";
 
 interface CaseCardProps {
   case: {
@@ -24,6 +28,13 @@ interface CaseCardProps {
 }
 
 export function CaseCard({ case: caseData, userType }: CaseCardProps) {
+  const router = useRouter();
+  const expressInterest = api.case.expressInterest.useMutation({
+    onSuccess: () => {
+      router.refresh();
+    },
+  });
+
   const urgencyColors = {
     LOW: "bg-green-100 text-green-800",
     MEDIUM: "bg-yellow-100 text-yellow-800", 
@@ -103,8 +114,12 @@ export function CaseCard({ case: caseData, userType }: CaseCardProps) {
               )}
             </div>
           ) : (
-            <Button size="sm">
-              Express Interest
+            <Button 
+              size="sm"
+              onClick={() => expressInterest.mutate({ caseId: caseData.id })}
+              disabled={expressInterest.isPending}
+            >
+              {expressInterest.isPending ? "Submitting..." : "Express Interest"}
             </Button>
           )}
         </div>

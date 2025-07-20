@@ -5,7 +5,7 @@ async function createTestUser() {
   try {
     const hashedPassword = await bcrypt.hash("password123", 12);
     
-    const user = await db.user.create({
+    await db.user.create({
       data: {
         name: "Test User",
         email: "test@example.com",
@@ -17,15 +17,17 @@ async function createTestUser() {
     console.log("📧 Email: test@example.com");
     console.log("🔑 Password: password123");
     console.log("🌐 Login at: http://localhost:3000/login");
-  } catch (error: any) {
-    if (error.code === 'P2002') {
+  } catch (error) {
+    if (error instanceof Error && 'code' in error && error.code === 'P2002') {
       console.log("ℹ️  Test user already exists");
       console.log("📧 Email: test@example.com");
       console.log("🔑 Password: password123");
     } else {
-      console.error("❌ Error creating user:", error.message);
+      console.error("❌ Error creating user:", error instanceof Error ? error.message : error);
     }
+  } finally {
+    await db.$disconnect();
   }
 }
 
-createTestUser();
+void createTestUser();
