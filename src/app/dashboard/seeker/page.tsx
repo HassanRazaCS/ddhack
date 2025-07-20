@@ -35,6 +35,11 @@ export default async function SeekerDashboard() {
           interests: true,
         },
       },
+      interests: {
+        select: {
+          lawyerId: true,
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",
