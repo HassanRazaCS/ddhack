@@ -1,7 +1,7 @@
 "use client";
 
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
 import { Button } from "./ui/button";
 
 // Assuming Newsreader font is imported globally via CSS, e.g., in globals.css:

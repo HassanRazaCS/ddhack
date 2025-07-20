@@ -199,7 +199,7 @@ export default async function VerificationStatus() {
               {lawyerProfile.verificationStatus === "VERIFIED" && (
                 <div className="space-y-4">
                   <p className="text-gray-700">
-                    Welcome to Legal Aid Connect! You now have full access to browse cases and offer pro bono services.
+                    Welcome to Advocado! You now have full access to browse cases and offer pro bono services.
                   </p>
                   <Link href="/dashboard/lawyer">
                     <Button>Go to Cases Dashboard</Button>

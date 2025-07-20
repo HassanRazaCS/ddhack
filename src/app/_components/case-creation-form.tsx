@@ -4,7 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
-import { Input, Textarea } from "~/components/ui/input";
+import { Input } from "~/components/ui/input";
+import { Textarea } from "~/components/ui/textarea";
+import { Label } from "~/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
 
 const legalCategories = [
   "Immigration Law",
@@ -95,77 +98,89 @@ export default function CaseCreationForm() {
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Case Title */}
-          <Input
-            id="title"
-            label="Case Title"
-            placeholder="Brief summary of your legal issue"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            helperText="Provide a clear, concise title that summarizes your legal issue"
-          />
+          <div className="space-y-2">
+            <Label htmlFor="title">Case Title <span className="text-red-500">*</span></Label>
+            <Input
+              id="title"
+              placeholder="Brief summary of your legal issue"
+              value={title}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+              required
+            />
+            <p className="text-sm text-muted-foreground">
+              Provide a clear, concise title that summarizes your legal issue
+            </p>
+          </div>
 
           {/* Legal Category */}
-          <div>
-            <label htmlFor="legalCategory" className="block text-sm font-medium text-gray-700 mb-2">
-              Legal Category <span className="text-red-500">*</span>
-            </label>
-            <select
-              id="legalCategory"
-              value={legalCategory}
-              onChange={(e) => setLegalCategory(e.target.value)}
-              required
-              className="block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
-            >
-              <option value="">Select a legal category</option>
-              {legalCategories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
+          <div className="space-y-2">
+            <Label htmlFor="legalCategory">Legal Category <span className="text-red-500">*</span></Label>
+            <Select value={legalCategory} onValueChange={setLegalCategory} required>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a legal category" />
+              </SelectTrigger>
+              <SelectContent>
+                {legalCategories.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Description */}
-          <Textarea
-            id="description"
-            label="Detailed Description"
-            placeholder="Provide a detailed description of your legal issue, including relevant facts, timeline, and what kind of help you're seeking..."
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            className="min-h-[150px]"
-            helperText="Include background information, key facts, timeline, and what specific help you need"
-          />
+          <div className="space-y-2">
+            <Label htmlFor="description">Detailed Description <span className="text-red-500">*</span></Label>
+            <Textarea
+              id="description"
+              placeholder="Provide a detailed description of your legal issue, including relevant facts, timeline, and what kind of help you're seeking..."
+              value={description}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
+              required
+              className="min-h-[150px]"
+            />
+            <p className="text-sm text-muted-foreground">
+              Include background information, key facts, timeline, and what specific help you need
+            </p>
+          </div>
 
           {/* Location Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              id="country"
-              label="Country"
-              placeholder="e.g., United States, Canada, United Kingdom"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              required
-              helperText="Country where the legal issue occurred"
-            />
+            <div className="space-y-2">
+              <Label htmlFor="country">Country <span className="text-red-500">*</span></Label>
+              <Input
+                id="country"
+                placeholder="e.g., United States, Canada, United Kingdom"
+                value={country}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCountry(e.target.value)}
+                required
+              />
+              <p className="text-sm text-muted-foreground">
+                Country where the legal issue occurred
+              </p>
+            </div>
 
-            <Input
-              id="jurisdiction"
-              label="Jurisdiction/State/Province"
-              placeholder="e.g., California, Ontario, England & Wales"
-              value={jurisdiction}
-              onChange={(e) => setJurisdiction(e.target.value)}
-              required
-              helperText="Specific legal jurisdiction"
-            />
+            <div className="space-y-2">
+              <Label htmlFor="jurisdiction">Jurisdiction/State/Province <span className="text-red-500">*</span></Label>
+              <Input
+                id="jurisdiction"
+                placeholder="e.g., California, Ontario, England & Wales"
+                value={jurisdiction}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setJurisdiction(e.target.value)}
+                required
+              />
+              <p className="text-sm text-muted-foreground">
+                Specific legal jurisdiction
+              </p>
+            </div>
           </div>
 
           {/* Urgency Level */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+          <div className="space-y-3">
+            <Label className="text-sm font-medium">
               Urgency Level <span className="text-red-500">*</span>
-            </label>
+            </Label>
             <div className="space-y-2">
               {urgencyLevels.map((level) => (
                 <label key={level.value} className="flex items-center cursor-pointer">
@@ -174,7 +189,7 @@ export default function CaseCreationForm() {
                     name="urgencyLevel"
                     value={level.value}
                     checked={urgencyLevel === level.value}
-                    onChange={(e) => setUrgencyLevel(e.target.value as "LOW" | "MEDIUM" | "HIGH" | "URGENT")}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUrgencyLevel(e.target.value as "LOW" | "MEDIUM" | "HIGH" | "URGENT")}
                     className="mr-3"
                   />
                   <span className={`${level.color} font-medium`}>
@@ -186,14 +201,18 @@ export default function CaseCreationForm() {
           </div>
 
           {/* Preferred Language */}
-          <Input
-            id="preferredLanguage"
-            label="Preferred Communication Language (Optional)"
-            placeholder="e.g., English, Spanish, French"
-            value={preferredLanguage}
-            onChange={(e) => setPreferredLanguage(e.target.value)}
-            helperText="Language you'd prefer to communicate in with lawyers"
-          />
+          <div className="space-y-2">
+            <Label htmlFor="preferredLanguage">Preferred Communication Language (Optional)</Label>
+            <Input
+              id="preferredLanguage"
+              placeholder="e.g., English, Spanish, French"
+              value={preferredLanguage}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPreferredLanguage(e.target.value)}
+            />
+            <p className="text-sm text-muted-foreground">
+              Language you&apos;d prefer to communicate in with lawyers
+            </p>
+          </div>
 
           {/* Error Message */}
           {error && (
@@ -206,7 +225,7 @@ export default function CaseCreationForm() {
           <div className="flex justify-end space-x-4">
             <Button
               type="button"
-              variant="secondary"
+              variant="outline"
               onClick={() => router.back()}
             >
               Cancel

@@ -1,4 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
 import Link from "next/link";
 
 export default function AboutPage() {
@@ -8,7 +9,7 @@ export default function AboutPage() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            About Legal Aid Connect
+            About Advocado
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Bridging the justice gap by connecting individuals who need legal assistance 
@@ -23,7 +24,7 @@ export default function AboutPage() {
           </CardHeader>
           <CardContent className="prose max-w-none">
             <p className="text-gray-700 leading-relaxed">
-              Legal Aid Connect was founded on the belief that access to justice should not be determined by one&apos;s ability to pay. 
+              Advocado was founded on the belief that access to justice should not be determined by one&apos;s ability to pay. 
               We serve as a bridge between individuals facing legal challenges and qualified legal professionals who are committed 
               to providing pro bono services. Our platform facilitates meaningful connections that help resolve legal issues while 
               fostering a global community of legal professionals dedicated to social justice.
@@ -76,7 +77,7 @@ export default function AboutPage() {
           </CardHeader>
           <CardContent>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Legal Aid Connect operates globally, supporting legal systems and jurisdictions worldwide. Our platform 
+              Advocado operates globally, supporting legal systems and jurisdictions worldwide. Our platform 
               accommodates lawyers licensed in any country or region, from common law systems like the United States, 
               Canada, and the United Kingdom, to civil law systems across Europe, and legal frameworks in developing nations.
             </p>
@@ -191,7 +192,7 @@ export default function AboutPage() {
           <CardContent>
             <p className="text-gray-700 leading-relaxed mb-4">
               Whether you&apos;re seeking legal assistance or want to contribute your legal expertise to help others, 
-              Legal Aid Connect welcomes you to join our growing global community.
+              Advocado welcomes you to join our growing global community.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="text-center p-4 bg-blue-50 rounded-lg">
@@ -199,22 +200,22 @@ export default function AboutPage() {
                 <p className="text-blue-700 text-sm mb-3">
                   Submit your case and connect with qualified pro bono lawyers.
                 </p>
-                <Link href="/signup">
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition-colors">
+                <Button asChild>
+                  <Link href="/signup">
                     Get Started
-                  </button>
-                </Link>
+                  </Link>
+                </Button>
               </div>
               <div className="text-center p-4 bg-green-50 rounded-lg">
                 <h4 className="font-semibold text-green-900 mb-2">Legal Professional?</h4>
                 <p className="text-green-700 text-sm mb-3">
                   Join our network and make a difference through pro bono work.
                 </p>
-                <Link href="/signup">
-                  <button className="bg-green-600 text-white px-4 py-2 rounded-md text-sm hover:bg-green-700 transition-colors">
+                <Button asChild className="bg-green-600 hover:bg-green-700">
+                  <Link href="/signup">
                     Join Now
-                  </button>
-                </Link>
+                  </Link>
+                </Button>
               </div>
             </div>
           </CardContent>
