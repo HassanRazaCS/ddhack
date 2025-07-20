@@ -10,6 +10,8 @@ import {
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
+import { InterestedLawyers } from "./interested-lawyers";
+import { useState } from "react";
 
 interface CaseCardProps {
   case: {
@@ -43,6 +45,11 @@ export function CaseCard({
   lawyerId,
 }: CaseCardProps) {
   const router = useRouter();
+  const [showInterested, setShowInterested] = useState(false);
+  const interestedLawyers = api.case.getInterestedLawyers.useQuery(
+    { caseId: caseData.id },
+    { enabled: showInterested },
+  );
   const expressInterest = api.case.expressInterest.useMutation({
     onSuccess: () => {
       router.refresh();
@@ -133,7 +140,9 @@ export function CaseCard({
                 View Details
               </Button>
               {caseData._count.interests > 0 && (
-                <Button size="sm">View Interested Lawyers</Button>
+                <Button size="sm" onClick={() => setShowInterested(!showInterested)}>
+                  {showInterested ? "Hide" : "View"} Interested Lawyers
+                </Button>
               )}
             </div>
           ) : (
@@ -150,6 +159,9 @@ export function CaseCard({
             </Button>
           )}
         </div>
+        {showInterested && interestedLawyers.data && (
+          <InterestedLawyers lawyers={interestedLawyers.data} />
+        )}
       </CardContent>
     </Card>
   );

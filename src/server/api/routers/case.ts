@@ -21,4 +21,15 @@ export const caseRouter = createTRPCRouter({
         },
       });
     }),
+
+  getInterestedLawyers: protectedProcedure
+    .input(z.object({ caseId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const interests = await ctx.db.caseInterest.findMany({
+        where: { caseId: input.caseId },
+        include: { lawyer: true },
+      });
+
+      return interests.map((interest) => interest.lawyer);
+    }),
 });
