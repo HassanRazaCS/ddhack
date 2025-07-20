@@ -2,6 +2,7 @@
 
 import { AlertTriangle, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { LegalRightsChatbot } from "~/app/_components/legal-rights-chatbot";
 
 // Shadcn UI components
 import {
@@ -348,6 +349,7 @@ type Country = keyof typeof countryRights;
 export default function KnowYourRightsPage() {
   const [selectedCountry, setSelectedCountry] = useState<Country>("UK");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
 
   const currentRights = countryRights[selectedCountry];
 
@@ -462,7 +464,10 @@ export default function KnowYourRightsPage() {
         </head>
         <body>
           <div class="header">
-            <div class="logo">⚖️ Advocado</div>
+            <div class="logo">
+              <img src="/logo.svg" alt="Advocado" style="height: 24px; width: auto; vertical-align: middle; margin-right: 8px;" />
+              Advocado
+            </div>
             <div class="title">${currentRights.title}</div>
             <div class="subtitle">Protest Rights Quick Reference</div>
           </div>
@@ -566,6 +571,13 @@ export default function KnowYourRightsPage() {
               </div>
             )}
           </div>
+          <button
+            onClick={() => setIsChatbotOpen(true)}
+            className="flex items-center justify-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm transition-colors hover:border-[#68D466] hover:bg-green-50 focus:border-[#68D466] focus:ring-2 focus:ring-[#68D466] focus:outline-none"
+          >
+            <span className="text-lg">✨</span>
+            <span className="font-medium text-gray-900">Ask Advocado AI</span>
+          </button>
           <button
             onClick={handlePrint}
             className="flex items-center justify-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm transition-colors hover:border-[#68D466] hover:bg-green-50 focus:border-[#68D466] focus:ring-2 focus:ring-[#68D466] focus:outline-none"
@@ -705,6 +717,12 @@ export default function KnowYourRightsPage() {
           </span>
         </div>
       </div>
+
+      {/* Legal Rights Chatbot */}
+      <LegalRightsChatbot
+        isOpen={isChatbotOpen}
+        onOpenChange={setIsChatbotOpen}
+      />
     </div>
   );
 }

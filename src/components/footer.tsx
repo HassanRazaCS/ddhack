@@ -111,7 +111,7 @@ export function Footer() {
               </Link>
             </div>
             <p className="mt-4 text-sm text-gray-500 md:mt-0">
-              © 2024 Advocado. All rights reserved.
+              {new Date().getFullYear()} Advocado. All rights reserved.
             </p>
           </div>
         </div>

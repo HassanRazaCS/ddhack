@@ -79,10 +79,33 @@ const components: Partial<Components> = {
 
 const remarkPlugins = [remarkGfm];
 
+// Function to decode common HTML entities
+const decodeHtmlEntities = (text: string): string => {
+  const entities: Record<string, string> = {
+    '&apos;': "'",
+    '&quot;': '"',
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&nbsp;': ' ',
+    '&lsquo;': "'",
+    '&rsquo;': "'",
+    '&ldquo;': '"',
+    '&rdquo;': '"',
+    '&#39;': "'",
+    '&#x27;': "'",
+  };
+  
+  return text.replace(/&[a-zA-Z0-9#]+;/g, (entity) => entities[entity] ?? entity);
+};
+
 const NonMemoizedMarkdown = ({ children }: { children: string }) => {
+  // Decode HTML entities before passing to ReactMarkdown
+  const decodedContent = decodeHtmlEntities(children);
+  
   return (
     <ReactMarkdown remarkPlugins={remarkPlugins} components={components}>
-      {children}
+      {decodedContent}
     </ReactMarkdown>
   );
 };

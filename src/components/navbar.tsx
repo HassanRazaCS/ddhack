@@ -23,7 +23,7 @@ export function Navbar() {
               />
               <span className="text-xl font-bold text-gray-900">Advocado</span>
             </Link>
-            </div>
+          </div>
 
           <div className="flex items-center space-x-4">
             {status === "loading" ? (
