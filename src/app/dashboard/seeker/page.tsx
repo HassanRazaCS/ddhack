@@ -196,11 +196,11 @@ export default async function SeekerDashboard() {
                     ❓ How It Works
                   </Button>
                 </Link>
-                <a href="mailto:support@legalaidconnect.org">
+                <Link href="/know-your-rights">
                   <Button variant="secondary" className="w-full justify-start">
-                    📞 Contact Support
+                    📚 Know Your Rights
                   </Button>
-                </a>
+                </Link>
               </CardContent>
             </Card>
 

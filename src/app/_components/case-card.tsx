@@ -89,8 +89,8 @@ export function CaseCard({
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <CardTitle className="text-lg">{caseData.title}</CardTitle>
-            <CardDescription className="mt-1">
+            <CardTitle className="text-lg break-all">{caseData.title}</CardTitle>
+            <CardDescription className="mt-1 break-all">
               {caseData.legalCategory} • {caseData.jurisdiction},{" "}
               {caseData.country}
             </CardDescription>
@@ -110,7 +110,7 @@ export function CaseCard({
         </div>
       </CardHeader>
       <CardContent>
-        <p className="mb-4 line-clamp-3 text-sm text-gray-600">
+        <p className="mb-4 line-clamp-3 text-sm text-gray-600 break-all">
           {caseData.description}
         </p>
 
@@ -118,7 +118,7 @@ export function CaseCard({
           <div className="flex items-center space-x-4">
             <span>Created {formatDate(caseData.createdAt)}</span>
             {caseData.preferredLanguage && (
-              <span>Language: {caseData.preferredLanguage}</span>
+              <span className="break-all">Language: {caseData.preferredLanguage}</span>
             )}
           </div>
           {userType === "SEEKER" && (
@@ -136,9 +136,6 @@ export function CaseCard({
         <div className="flex justify-end">
           {userType === "SEEKER" ? (
             <div className="space-x-2">
-              <Button variant="secondary" size="sm">
-                View Details
-              </Button>
               {caseData._count.interests > 0 && (
                 <Button size="sm" onClick={() => setShowInterested(!showInterested)}>
                   {showInterested ? "Hide Interested Lawyers" : "View Interested Lawyers"}
