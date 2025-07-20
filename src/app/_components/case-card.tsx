@@ -87,7 +87,7 @@ export function CaseCard({
   return (
     <Card className="transition-shadow hover:shadow-md">
       <CardHeader>
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col space-y-3 sm:flex-row sm:items-start sm:justify-between sm:space-y-0">
           <div className="flex-1">
             <CardTitle className="text-lg">{caseData.title}</CardTitle>
             <CardDescription className="mt-1">
@@ -95,7 +95,7 @@ export function CaseCard({
               {caseData.country}
             </CardDescription>
           </div>
-          <div className="ml-4 flex flex-col gap-2">
+          <div className="flex gap-2 sm:ml-4 sm:flex-col">
             <span
               className={`rounded-full px-2 py-1 text-xs font-medium ${urgencyColors[caseData.urgencyLevel as keyof typeof urgencyColors]}`}
             >
@@ -114,8 +114,8 @@ export function CaseCard({
           {caseData.description}
         </p>
 
-        <div className="mb-4 flex items-center justify-between text-sm text-gray-500">
-          <div className="flex items-center space-x-4">
+        <div className="mb-4 flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 text-sm text-gray-500">
+          <div className="flex flex-col space-y-1 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
             <span>Created {formatDate(caseData.createdAt)}</span>
             {caseData.preferredLanguage && (
               <span>Language: {caseData.preferredLanguage}</span>
@@ -133,21 +133,22 @@ export function CaseCard({
           )}
         </div>
 
-        <div className="flex justify-end">
+        <div className="flex flex-col space-y-2 sm:flex-row sm:justify-end sm:space-y-0 sm:space-x-2">
           {userType === "SEEKER" ? (
-            <div className="space-x-2">
-              <Button variant="secondary" size="sm">
+            <>
+              <Button variant="secondary" size="sm" className="w-full sm:w-auto">
                 View Details
               </Button>
               {caseData._count.interests > 0 && (
-                <Button size="sm" onClick={() => setShowInterested(!showInterested)}>
+                <Button size="sm" className="w-full sm:w-auto" onClick={() => setShowInterested(!showInterested)}>
                   {showInterested ? "Hide Interested Lawyers" : "View Interested Lawyers"}
                 </Button>
               )}
-            </div>
+            </>
           ) : (
             <Button
               size="sm"
+              className="w-full sm:w-auto"
               onClick={() => expressInterest.mutate({ caseId: caseData.id })}
               disabled={isInterested ?? expressInterest.isPending}
             >

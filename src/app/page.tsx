@@ -25,15 +25,14 @@ export default async function Home() {
     // Apply background color and font directly
     <div className="bg-[#f6f6ed] font-['Newsreader']">
       <section
-        className="flex items-center justify-center"
-        style={{ height: "calc(100vh - 4rem)" }}
+        className="flex items-center justify-center px-4 sm:px-6 lg:px-8"
+        style={{ minHeight: "calc(100vh - 4rem)" }}
       >
-        {/* Added px for consistency */}
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 className="mb-6 text-5xl leading-tight font-bold text-gray-800 md:text-6xl lg:text-7xl">
+        <div className="mx-auto max-w-7xl text-center lg:text-left">
+          <h1 className="mb-6 text-3xl leading-tight font-bold text-gray-800 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
             Connecting legal needs with pro bono professionals.
           </h1>
-          <p className="max-w-7xl text-xl text-gray-700">
+          <p className="max-w-3xl text-lg text-gray-700 sm:text-xl mx-auto lg:mx-0">
             Bridging the justice gap by connecting individuals who need legal
             assistance with lawyers willing to provide pro bono services.
           </p>
@@ -43,19 +42,19 @@ export default async function Home() {
       <hr className="mx-auto max-w-7xl border-gray-300" />
 
       {/* How It Works Section */}
-      <section className="py-16">
+      <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
+          <div className="mb-8 sm:mb-12 text-center lg:text-left">
+            <h2 className="mb-4 text-2xl font-bold text-gray-900 sm:text-3xl lg:text-4xl">
               How it works
             </h2>
-            <p className="max-w-xl text-xl text-gray-600">
+            <p className="max-w-xl text-lg text-gray-600 sm:text-xl mx-auto lg:mx-0">
               Our simple process connects those in need with legal professionals
               ready to help.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3">
             {/* Submit Your Case Card */}
             {/* Changed structure to use CardContent for the main content area,
                 removed flex-col items-start from Card to rely on Shadcn's internal layout for width. */}
@@ -115,16 +114,16 @@ export default async function Home() {
 
       <hr className="mx-auto max-w-7xl border-gray-300" />
 
-      <section className="py-32">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
+      <section className="py-16 sm:py-24 lg:py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 sm:gap-12 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
           <div>
-            <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">
+            <h2 className="mb-6 text-2xl font-bold text-gray-900 sm:text-3xl lg:text-4xl">
               For those Seeking Legal Aid
             </h2>
-            <div className="space-y-12">
-              <div className="flex items-center">
+            <div className="space-y-8 sm:space-y-12">
+              <div className="flex items-start">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     Free Case Submission
                   </h3>
                   <p className="text-gray-600">
@@ -133,9 +132,9 @@ export default async function Home() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-start">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     Know Your Rights
                   </h3>
                   <p className="text-gray-600">
@@ -144,9 +143,9 @@ export default async function Home() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-start">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     Track Your Cases
                   </h3>
                   <p className="text-gray-600">
@@ -160,13 +159,13 @@ export default async function Home() {
           </div>
 
           <div>
-            <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">
+            <h2 className="mb-6 text-2xl font-bold text-gray-900 sm:text-3xl lg:text-4xl">
               For Legal Professionals
             </h2>
-            <div className="space-y-12">
-              <div className="flex items-center space-x-4">
+            <div className="space-y-8 sm:space-y-12">
+              <div className="flex items-start">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     Browse Available Cases
                   </h3>
                   <p className="text-gray-600">
@@ -175,9 +174,9 @@ export default async function Home() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-start">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     Verified Professional Status
                   </h3>
                   <p className="text-gray-600">
@@ -186,9 +185,9 @@ export default async function Home() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-start">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     Manage Your Caseload
                   </h3>
                   <p className="text-gray-600">

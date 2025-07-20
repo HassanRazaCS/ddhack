@@ -59,16 +59,16 @@ export default async function BrowseCases() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Browse Cases</h1>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">Browse Cases</h1>
               <p className="text-gray-600 mt-2">
                 Find pro bono legal cases that match your expertise and help those in need.
               </p>
             </div>
             <Link href="/dashboard/lawyer">
-              <Button variant="secondary">Back to Dashboard</Button>
+              <Button variant="secondary" className="w-full sm:w-auto">Back to Dashboard</Button>
             </Link>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default async function BrowseCases() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Legal Category
@@ -129,7 +129,7 @@ export default async function BrowseCases() {
                     <option>Other</option>
                   </select>
                 </div>
-                <div className="flex items-end">
+                <div className="flex items-end sm:col-span-2 lg:col-span-1">
                   <Button className="w-full">Apply Filters</Button>
                 </div>
               </div>
