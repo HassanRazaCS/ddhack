@@ -64,13 +64,14 @@ export function Modal({
                       </Dialog.Title>
                     )}
                     {showCloseButton && (
-                      <button
-                        type="button"
-                        className="rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      <Button
+                        variant="ghost"
+                        size="icon"
                         onClick={onClose}
+                        className="text-gray-400 hover:text-gray-500"
                       >
                         <XMarkIcon className="h-6 w-6" />
-                      </button>
+                      </Button>
                     )}
                   </div>
                 )}
@@ -92,7 +93,7 @@ interface ConfirmModalProps {
   message: string;
   confirmText?: string;
   cancelText?: string;
-  variant?: "danger" | "primary";
+  variant?: "destructive" | "default";
 }
 
 export function ConfirmModal({
@@ -103,7 +104,7 @@ export function ConfirmModal({
   message,
   confirmText = "Confirm",
   cancelText = "Cancel",
-  variant = "primary",
+  variant = "default",
 }: ConfirmModalProps) {
   const handleConfirm = () => {
     onConfirm();
@@ -115,7 +116,7 @@ export function ConfirmModal({
       <div className="space-y-4">
         <p className="text-gray-600">{message}</p>
         <div className="flex justify-end space-x-3">
-          <Button variant="secondary" onClick={onClose}>
+          <Button variant="outline" onClick={onClose}>
             {cancelText}
           </Button>
           <Button variant={variant} onClick={handleConfirm}>

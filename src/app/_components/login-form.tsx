@@ -3,6 +3,10 @@
 import { useState } from "react";
 import { signIn, getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import { Alert, AlertDescription } from "~/components/ui/alert";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -53,32 +57,30 @@ export default function LoginForm() {
       </div>
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium">
+          <Label htmlFor="email" className="block text-sm font-medium">
             Email address
-          </label>
-          <input
+          </Label>
+          <Input
             id="email"
             name="email"
             type="email"
             autoComplete="email"
             required
-            className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
             placeholder="Email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
-          <label htmlFor="password" className="block text-sm font-medium">
+          <Label htmlFor="password" className="block text-sm font-medium">
             Password
-          </label>
-          <input
+          </Label>
+          <Input
             id="password"
             name="password"
             type="password"
             autoComplete="current-password"
             required
-            className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -86,19 +88,19 @@ export default function LoginForm() {
         </div>
 
         {error && (
-          <div className="rounded-md bg-red-50 p-4">
-            <div className="text-sm text-red-800">{error}</div>
-          </div>
+          <Alert variant="destructive">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
         )}
 
         <div>
-          <button
+          <Button
             type="submit"
             disabled={loading}
-            className="group relative flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50"
+            className="w-full"
           >
             {loading ? "Signing in..." : "Sign in"}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

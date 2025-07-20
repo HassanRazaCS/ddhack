@@ -3,6 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import { Alert, AlertDescription } from "~/components/ui/alert";
 
 export default function SignupForm() {
   const [name, setName] = useState("");
@@ -109,100 +114,82 @@ export default function SignupForm() {
       </div>
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
-          <label className="block text-sm font-medium mb-3">
+          <Label className="block text-sm font-medium mb-3">
             I am...
-          </label>
-          <div className="grid grid-cols-2 gap-4">
-            <label className="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
-              <input
-                type="radio"
-                name="userType"
-                value="SEEKER"
-                checked={userType === "SEEKER"}
-                onChange={(e) => setUserType(e.target.value)}
-                className="mr-3"
-              />
-              <div>
+          </Label>
+          <RadioGroup value={userType} onValueChange={setUserType} className="grid grid-cols-2 gap-4">
+            <div className="flex items-center p-4 border rounded-lg hover:bg-gray-50">
+              <RadioGroupItem value="SEEKER" id="seeker" className="mr-3" />
+              <Label htmlFor="seeker" className="cursor-pointer">
                 <div className="font-medium">Seeking Legal Aid</div>
                 <div className="text-sm text-gray-600">I need legal assistance</div>
-              </div>
-            </label>
-            <label className="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
-              <input
-                type="radio"
-                name="userType"
-                value="LAWYER"
-                checked={userType === "LAWYER"}
-                onChange={(e) => setUserType(e.target.value)}
-                className="mr-3"
-              />
-              <div>
+              </Label>
+            </div>
+            <div className="flex items-center p-4 border rounded-lg hover:bg-gray-50">
+              <RadioGroupItem value="LAWYER" id="lawyer" className="mr-3" />
+              <Label htmlFor="lawyer" className="cursor-pointer">
                 <div className="font-medium">Lawyer</div>
                 <div className="text-sm text-gray-600">I want to offer pro bono services</div>
-              </div>
-            </label>
-          </div>
+              </Label>
+            </div>
+          </RadioGroup>
         </div>
 
         <div>
-          <label htmlFor="name" className="block text-sm font-medium">
+          <Label htmlFor="name" className="block text-sm font-medium">
             Full name
-          </label>
-          <input
+          </Label>
+          <Input
             id="name"
             name="name"
             type="text"
             autoComplete="name"
             required
-            className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
             placeholder="Full name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium">
+          <Label htmlFor="email" className="block text-sm font-medium">
             Email address
-          </label>
-          <input
+          </Label>
+          <Input
             id="email"
             name="email"
             type="email"
             autoComplete="email"
             required
-            className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
             placeholder="Email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
-          <label htmlFor="password" className="block text-sm font-medium">
+          <Label htmlFor="password" className="block text-sm font-medium">
             Password
-          </label>
-          <input
+          </Label>
+          <Input
             id="password"
             name="password"
             type="password"
             autoComplete="new-password"
             required
-            className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
             placeholder="Password (min 6 characters)"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium">
+          <Label htmlFor="confirmPassword" className="block text-sm font-medium">
             Confirm password
-          </label>
-          <input
+          </Label>
+          <Input
             id="confirmPassword"
             name="confirmPassword"
             type="password"
             autoComplete="new-password"
             required
-            className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
             placeholder="Confirm password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -216,15 +203,14 @@ export default function SignupForm() {
             </div>
 
             <div>
-              <label htmlFor="fullName" className="block text-sm font-medium">
+              <Label htmlFor="fullName" className="block text-sm font-medium">
                 Professional Full Name
-              </label>
-              <input
+              </Label>
+              <Input
                 id="fullName"
                 name="fullName"
                 type="text"
                 required={userType === "LAWYER"}
-                className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
                 placeholder="Full legal name as licensed"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
@@ -232,15 +218,14 @@ export default function SignupForm() {
             </div>
 
             <div>
-              <label htmlFor="licenseNumber" className="block text-sm font-medium">
+              <Label htmlFor="licenseNumber" className="block text-sm font-medium">
                 License Number
-              </label>
-              <input
+              </Label>
+              <Input
                 id="licenseNumber"
                 name="licenseNumber"
                 type="text"
                 required={userType === "LAWYER"}
-                className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
                 placeholder="Professional license number"
                 value={licenseNumber}
                 onChange={(e) => setLicenseNumber(e.target.value)}
@@ -248,15 +233,14 @@ export default function SignupForm() {
             </div>
 
             <div>
-              <label htmlFor="country" className="block text-sm font-medium">
+              <Label htmlFor="country" className="block text-sm font-medium">
                 Country
-              </label>
-              <input
+              </Label>
+              <Input
                 id="country"
                 name="country"
                 type="text"
                 required={userType === "LAWYER"}
-                className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
                 placeholder="e.g., United States, Canada, United Kingdom"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
@@ -264,15 +248,14 @@ export default function SignupForm() {
             </div>
 
             <div>
-              <label htmlFor="jurisdiction" className="block text-sm font-medium">
+              <Label htmlFor="jurisdiction" className="block text-sm font-medium">
                 Jurisdiction
-              </label>
-              <input
+              </Label>
+              <Input
                 id="jurisdiction"
                 name="jurisdiction"
                 type="text"
                 required={userType === "LAWYER"}
-                className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
                 placeholder="e.g., California, Ontario, England & Wales"
                 value={jurisdiction}
                 onChange={(e) => setJurisdiction(e.target.value)}
@@ -280,15 +263,14 @@ export default function SignupForm() {
             </div>
 
             <div>
-              <label htmlFor="contactEmail" className="block text-sm font-medium">
+              <Label htmlFor="contactEmail" className="block text-sm font-medium">
                 Professional Contact Email
-              </label>
-              <input
+              </Label>
+              <Input
                 id="contactEmail"
                 name="contactEmail"
                 type="email"
                 required={userType === "LAWYER"}
-                className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
                 placeholder="Professional email address"
                 value={contactEmail}
                 onChange={(e) => setContactEmail(e.target.value)}
@@ -296,14 +278,13 @@ export default function SignupForm() {
             </div>
 
             <div>
-              <label htmlFor="firmName" className="block text-sm font-medium">
+              <Label htmlFor="firmName" className="block text-sm font-medium">
                 Law Firm Name (Optional)
-              </label>
-              <input
+              </Label>
+              <Input
                 id="firmName"
                 name="firmName"
                 type="text"
-                className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
                 placeholder="Law firm or organization"
                 value={firmName}
                 onChange={(e) => setFirmName(e.target.value)}
@@ -311,14 +292,13 @@ export default function SignupForm() {
             </div>
 
             <div>
-              <label htmlFor="specializations" className="block text-sm font-medium">
+              <Label htmlFor="specializations" className="block text-sm font-medium">
                 Legal Specializations
-              </label>
-              <input
+              </Label>
+              <Input
                 id="specializations"
                 name="specializations"
                 type="text"
-                className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
                 placeholder="e.g., Family Law, Corporate Law, Human Rights (comma separated)"
                 value={specializations}
                 onChange={(e) => setSpecializations(e.target.value)}
@@ -326,16 +306,15 @@ export default function SignupForm() {
             </div>
 
             <div>
-              <label htmlFor="yearsOfExperience" className="block text-sm font-medium">
+              <Label htmlFor="yearsOfExperience" className="block text-sm font-medium">
                 Years of Experience (Optional)
-              </label>
-              <input
+              </Label>
+              <Input
                 id="yearsOfExperience"
                 name="yearsOfExperience"
                 type="number"
                 min="0"
                 max="60"
-                className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
                 placeholder="Years of practice"
                 value={yearsOfExperience}
                 onChange={(e) => setYearsOfExperience(e.target.value)}
@@ -343,14 +322,13 @@ export default function SignupForm() {
             </div>
 
             <div>
-              <label htmlFor="languagesSpoken" className="block text-sm font-medium">
+              <Label htmlFor="languagesSpoken" className="block text-sm font-medium">
                 Languages Spoken (Optional)
-              </label>
-              <input
+              </Label>
+              <Input
                 id="languagesSpoken"
                 name="languagesSpoken"
                 type="text"
-                className="relative block w-full rounded-md border-0 px-3 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
                 placeholder="e.g., English, Spanish, French (comma separated)"
                 value={languagesSpoken}
                 onChange={(e) => setLanguagesSpoken(e.target.value)}
@@ -360,19 +338,19 @@ export default function SignupForm() {
         )}
 
         {error && (
-          <div className="rounded-md bg-red-50 p-4">
-            <div className="text-sm text-red-800">{error}</div>
-          </div>
+          <Alert variant="destructive">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
         )}
 
         <div>
-          <button
+          <Button
             type="submit"
             disabled={loading}
-            className="group relative flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50"
+            className="w-full"
           >
             {loading ? "Creating account..." : "Create account"}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

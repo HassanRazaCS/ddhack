@@ -1,78 +1,21 @@
-import { type InputHTMLAttributes, forwardRef } from "react";
-import { cn } from "~/lib/utils";
+import * as React from "react"
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  error?: string;
-  helperText?: string;
+import { cn } from "~/lib/utils"
+
+function Input({ className, type, ...props }: React.ComponentProps<"input">) {
+  return (
+    <input
+      type={type}
+      data-slot="input"
+      className={cn(
+        "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+        "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+        className
+      )}
+      {...props}
+    />
+  )
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, helperText, className, ...props }, ref) => {
-    return (
-      <div className="space-y-1">
-        {label && (
-          <label htmlFor={props.id} className="block text-sm font-medium text-gray-700">
-            {label}
-            {props.required && <span className="text-red-500 ml-1">*</span>}
-          </label>
-        )}
-        <input
-          ref={ref}
-          className={cn(
-            "block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6",
-            error && "ring-red-300 focus:ring-red-600",
-            className
-          )}
-          {...props}
-        />
-        {error && (
-          <p className="text-sm text-red-600">{error}</p>
-        )}
-        {helperText && !error && (
-          <p className="text-sm text-gray-500">{helperText}</p>
-        )}
-      </div>
-    );
-  }
-);
-
-Input.displayName = "Input";
-
-const Textarea = forwardRef<HTMLTextAreaElement, InputHTMLAttributes<HTMLTextAreaElement> & {
-  label?: string;
-  error?: string;
-  helperText?: string;
-}>(
-  ({ label, error, helperText, className, ...props }, ref) => {
-    return (
-      <div className="space-y-1">
-        {label && (
-          <label htmlFor={props.id} className="block text-sm font-medium text-gray-700">
-            {label}
-            {props.required && <span className="text-red-500 ml-1">*</span>}
-          </label>
-        )}
-        <textarea
-          ref={ref}
-          className={cn(
-            "block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 min-h-[100px]",
-            error && "ring-red-300 focus:ring-red-600",
-            className
-          )}
-          {...props}
-        />
-        {error && (
-          <p className="text-sm text-red-600">{error}</p>
-        )}
-        {helperText && !error && (
-          <p className="text-sm text-gray-500">{helperText}</p>
-        )}
-      </div>
-    );
-  }
-);
-
-Textarea.displayName = "Textarea";
-
-export { Input, Textarea };
+export { Input }

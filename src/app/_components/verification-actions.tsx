@@ -67,7 +67,7 @@ export default function VerificationActions({ lawyerId }: VerificationActionsPro
         title="Approve Lawyer Verification"
         message="Are you sure you want to approve this lawyer? They will gain full access to browse and respond to cases."
         confirmText="Approve"
-        variant="primary"
+        variant="default"
       />
 
       <ConfirmModal
@@ -77,7 +77,7 @@ export default function VerificationActions({ lawyerId }: VerificationActionsPro
         title="Reject Lawyer Application"
         message="Are you sure you want to reject this lawyer application? This action can be undone later if needed."
         confirmText="Reject"
-        variant="danger"
+        variant="destructive"
       />
     </>
   );
