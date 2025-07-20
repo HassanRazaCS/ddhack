@@ -1,15 +1,23 @@
 "use client";
 
+import { AlertTriangle, ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { AlertTriangle, Phone, ExternalLink, ChevronDown } from "lucide-react";
-import Link from "next/link";
 
 // Shadcn UI components
-import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "~/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "~/components/ui/accordion";
 import { Badge } from "~/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
 
 // Country rights data structure
 const countryRights = {
@@ -22,18 +30,18 @@ const countryRights = {
         heading: "Your Fundamental Rights (First Amendment)",
         points: [
           "You have the right to **peacefully assemble** and express your views through protest.",
-          "You have the right to **free speech**, even if it's unpopular or controversial.",
+          "You have the right to **free speech**, even if it&apos;s unpopular or controversial.",
           "Your rights are strongest in **traditional public forums** like streets, sidewalks, and parks.",
           "You have the right to **photograph or videotape** anything in plain view in a public space.",
           "**Counter-protesters** also have free speech rights. Police must treat both groups equally.",
-          "You do **not need a permit** to march on streets or sidewalks if you don't obstruct traffic.",
+          "You do **not need a permit** to march on streets or sidewalks if you don&apos;t obstruct traffic.",
         ],
       },
       {
         heading: "If You Are Stopped by Police",
         points: [
           "**Stay calm** and keep your hands visible. Do not argue, resist, or obstruct the police.",
-          "Ask **'Am I free to leave?'** If the officer says yes, calmly walk away.",
+          "Ask **&apos;Am I free to leave?&apos;** If the officer says yes, calmly walk away.",
           "If you are under arrest, you have a right to **ask why**.",
           "State that you wish to **remain silent** and ask for a lawyer immediately.",
           "You do **not have to consent** to a search of yourself or your belongings.",
@@ -47,7 +55,7 @@ const countryRights = {
           "You have the right to **remain silent**. You do not have to answer questions about immigration status.",
           "You do **not have to consent** to a search of yourself or your belongings.",
           "If you are not a U.S. citizen, **carry immigration documents** with you if you have them.",
-          "You have the right to **an attorney**, but government doesn't provide one for immigration cases.",
+          "You have the right to **an attorney**, but government doesn&apos;t provide one for immigration cases.",
           "Do **not lie** about your status or provide false documents.",
           "If detained, ask to **call a lawyer or your consulate** immediately.",
         ],
@@ -73,62 +81,80 @@ const countryRights = {
       },
     ],
     importantNumbers: [
-      "ACLU Know Your Rights Hotline: aclu.org/know-your-rights",
-      "Legal Aid: lawhelp.org",
-      "Immigration Hotline: 1-844-363-1423",
-      "National Lawyers Guild: nlg.org",
+      {
+        name: "ACLU Know Your Rights",
+        url: "https://aclu.org/know-your-rights",
+      },
+      { name: "Legal Aid", url: "https://lawhelp.org" },
+      { name: "Immigration Hotline", url: "tel:1-844-363-1423" },
+      { name: "National Lawyers Guild", url: "https://nlg.org" },
     ],
   },
   UK: {
     flag: "🇬🇧",
     name: "United Kingdom",
-    title: "Know Your Rights in the United Kingdom",
+    title: "Know Your Rights in the United Kingdom 🏛️",
     sections: [
       {
-        heading: "Your Fundamental Rights",
+        heading: "🛡️ Your Fundamental Protest Rights",
         points: [
-          "You have the right to **peaceful protest** under Article 11 of the European Convention on Human Rights.",
-          "You have the right to **freedom of expression** under Article 10.",
-          "**Police powers** are limited and must be exercised lawfully and proportionately.",
-          "You have the right to **record police** in public spaces.",
-          "**Peaceful assembly** is protected, but organizers may need to notify police for large gatherings.",
+          "You have the right to **peaceful protest** under Article 11 of the European Convention on Human Rights - this is your democratic right.",
+          "You have the right to **freedom of expression** under Article 10 - your voice matters and deserves to be heard.",
+          "**Police powers** are limited and must be exercised lawfully and proportionately - they cannot act without proper justification.",
+          "You have the right to **record police** in public spaces - documenting interactions protects everyone.",
+          "**Peaceful assembly** is protected by law, but organizers may need to notify police for large gatherings - this is just administrative, not permission.",
         ],
       },
       {
-        heading: "If You Are Stopped by Police",
+        heading:
+          "🚔 If You Are Stopped by Police (Stay Calm - You Have Rights)",
         points: [
-          "Police can **stop and search** you if they have reasonable grounds for suspicion.",
-          "You have the right to **know the officer's name**, station, and reason for the stop.",
-          "You have the right to a **copy of the search record**.",
-          "Stay **calm and cooperative** but you can ask questions about the search.",
-          "You do **not have to answer questions** beyond providing your name and address if required.",
+          "Stay **calm and polite** - this protects you and makes the interaction smoother for everyone involved.",
+          "Police can **stop and search** you only if they have reasonable grounds for suspicion - you can ask what these grounds are.",
+          "You have the right to **know the officer&apos;s name**, station, and reason for the stop - this information is legally required.",
+          "You have the right to a **copy of the search record** - always ask for this as it's your legal entitlement.",
+          "You do **not have to answer questions** beyond providing your name and address if required - silence is not guilt.",
         ],
       },
       {
-        heading: "Your Rights During Arrest",
+        heading: "🔒 Your Rights During Arrest (You Are Protected)",
         points: [
-          "Police must tell you that **you are under arrest** and the reason why.",
-          "You have the right to **remain silent** (you do not have to answer questions).",
-          "You have the right to **free legal advice** and to have someone told of your arrest.",
-          "Police can **hold you for up to 24 hours** before charging you (longer in serious cases).",
-          "You should be given a **written notice** of your rights at the police station.",
+          "Police must tell you that **you are under arrest** and the reason why - this is the law, not optional.",
+          "You have the right to **remain silent** - you do not have to answer questions, and this cannot be used against you.",
+          "You have the right to **free legal advice** and to have someone told of your arrest - this support is always available to you.",
+          "Police can **hold you for up to 24 hours** before charging you (longer only in serious cases) - there are strict time limits protecting you.",
+          "You should be given a **written notice** of your rights at the police station - make sure you receive and understand this.",
         ],
       },
       {
-        heading: "Protest-Specific Rights",
+        heading: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 UK-Specific Protest Guidance (Know Your Power)",
         points: [
-          "**Peaceful protest** is generally lawful in public places.",
-          "Police can impose **conditions** on protests to prevent disorder, damage, or disruption.",
-          "**Trespass** on private property is generally a civil matter, not criminal.",
-          "**Obstruction of the highway** can be an offense if it's unreasonable.",
+          "**Say &apos;no comment&apos;** to all police questions during casual chats and &apos;booking in&apos; interviews - this protects you legally.",
+          "At a police station, you may give your **name, address, and date of birth** to speed up your release, but don&apos;t answer further questions.",
+          "**Do not accept a caution** without advice from a recommended solicitor - this is an admission of responsibility and goes on the Police National Computer permanently.",
+          "You have the right to **free legal advice** at the police station - duty solicitors don&apos;t always have experience with protest law, so ask to contact a specialist if needed.",
+          "**Peaceful protest** is generally lawful in public places - you're exercising a fundamental democratic right.",
+          "Police can impose **conditions** on protests to prevent disorder, but these must be reasonable and proportionate.",
+          "**Trespass** on private property is generally a civil matter, not criminal - don&apos;t let this intimidate you unnecessarily.",
         ],
       },
     ],
     importantNumbers: [
-      "Legal Aid Agency: gov.uk/legal-aid",
-      "Citizens Advice: citizensadvice.org.uk",
-      "Liberty (Human Rights): libertyhumanrights.org.uk",
-      "Green & Black Cross (Protest Support): greenandblackcross.org",
+      { name: "Legal Aid Agency", url: "https://gov.uk/legal-aid" },
+      { name: "Citizens Advice", url: "https://citizensadvice.org.uk" },
+      {
+        name: "Liberty (Human Rights)",
+        url: "https://libertyhumanrights.org.uk",
+      },
+      {
+        name: "Green & Black Cross (Protest Support)",
+        url: "https://greenandblackcross.org",
+      },
+      {
+        name: "Hodge Jones & Allen (Protest Law Specialists)",
+        url: "https://hja.net",
+      },
+      { name: "Network for Police Monitoring", url: "https://netpol.org" },
     ],
   },
   Germany: {
@@ -168,10 +194,10 @@ const countryRights = {
       },
     ],
     importantNumbers: [
-      "Legal Aid: beratungshilfe.de",
-      "German Bar Association: anwaltverein.de",
-      "Amnesty International Germany: amnesty.de",
-      "Pro Asyl (for immigration issues): proasyl.de",
+      { name: "Legal Aid (Beratungshilfe)", url: "https://beratungshilfe.de" },
+      { name: "German Bar Association", url: "https://anwaltverein.de" },
+      { name: "Amnesty International Germany", url: "https://amnesty.de" },
+      { name: "Pro Asyl (Immigration Issues)", url: "https://proasyl.de" },
     ],
   },
   France: {
@@ -210,10 +236,19 @@ const countryRights = {
       },
     ],
     importantNumbers: [
-      "Legal Aid (Aide juridictionnelle): justice.gouv.fr",
-      "French Human Rights League (LDH): ldh-france.org",
-      "SOS Racisme: sos-racisme.org",
-      "Lawyers without Borders: avocatssansfrontieres.org",
+      {
+        name: "Legal Aid (Aide juridictionnelle)",
+        url: "https://justice.gouv.fr",
+      },
+      {
+        name: "French Human Rights League (LDH)",
+        url: "https://ldh-france.org",
+      },
+      { name: "SOS Racisme", url: "https://sos-racisme.org" },
+      {
+        name: "Lawyers without Borders",
+        url: "https://avocatssansfrontieres.org",
+      },
     ],
   },
   Canada: {
@@ -252,10 +287,13 @@ const countryRights = {
       },
     ],
     importantNumbers: [
-      "Legal Aid: legalaid.on.ca (varies by province)",
-      "Canadian Civil Liberties Association: ccla.org",
-      "British Columbia Civil Liberties: bccla.org",
-      "Canadian Bar Association: cba.org",
+      {
+        name: "Legal Aid Ontario (varies by province)",
+        url: "https://legalaid.on.ca",
+      },
+      { name: "Canadian Civil Liberties Association", url: "https://ccla.org" },
+      { name: "British Columbia Civil Liberties", url: "https://bccla.org" },
+      { name: "Canadian Bar Association", url: "https://cba.org" },
     ],
   },
   Australia: {
@@ -277,7 +315,7 @@ const countryRights = {
         points: [
           "You have the right to **remain silent** (except when required to provide identification).",
           "Police can **request identification** in certain circumstances (varies by state).",
-          "You have the right to **ask if you're free to leave**.",
+          "You have the right to **ask if you&apos;re free to leave**.",
           "Police need **reasonable suspicion** to search you in most circumstances.",
           "You have the right to **legal representation** and a phone call upon arrest.",
         ],
@@ -294,10 +332,13 @@ const countryRights = {
       },
     ],
     importantNumbers: [
-      "Legal Aid: nationallegalaid.org",
-      "Australian Human Rights Commission: humanrights.gov.au",
-      "NSW Council for Civil Liberties: nswccl.org.au",
-      "Victoria Legal Aid: legalaid.vic.gov.au",
+      { name: "National Legal Aid", url: "https://nationallegalaid.org" },
+      {
+        name: "Australian Human Rights Commission",
+        url: "https://humanrights.gov.au",
+      },
+      { name: "NSW Council for Civil Liberties", url: "https://nswccl.org.au" },
+      { name: "Victoria Legal Aid", url: "https://legalaid.vic.gov.au" },
     ],
   },
 };
@@ -305,48 +346,209 @@ const countryRights = {
 type Country = keyof typeof countryRights;
 
 export default function KnowYourRightsPage() {
-  const [selectedCountry, setSelectedCountry] = useState<Country>('US');
+  const [selectedCountry, setSelectedCountry] = useState<Country>("UK");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const currentRights = countryRights[selectedCountry];
 
+  const generatePrintableContent = () => {
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Know Your Rights - ${currentRights.name} | Advocado</title>
+          <style>
+            body {
+              font-family: 'Arial', sans-serif;
+              line-height: 1.6;
+              margin: 0;
+              padding: 20px;
+              color: #333;
+              background: white;
+            }
+            .header {
+              text-align: center;
+              border-bottom: 2px solid #68D466;
+              padding-bottom: 20px;
+              margin-bottom: 30px;
+            }
+            .logo {
+              font-size: 32px;
+              font-weight: bold;
+              color: #68D466;
+              margin-bottom: 10px;
+            }
+            .title {
+              font-size: 24px;
+              font-weight: bold;
+              margin-bottom: 10px;
+            }
+            .subtitle {
+              font-size: 16px;
+              color: #666;
+              margin-bottom: 20px;
+            }
+            .section {
+              margin-bottom: 25px;
+              break-inside: avoid;
+            }
+            .section-title {
+              font-size: 18px;
+              font-weight: bold;
+              color: #68D466;
+              margin-bottom: 10px;
+              border-bottom: 1px solid #e0e0e0;
+              padding-bottom: 5px;
+            }
+            .point {
+              margin-bottom: 8px;
+              padding-left: 15px;
+              position: relative;
+              font-size: 14px;
+            }
+            .point::before {
+              content: "•";
+              color: #68D466;
+              font-weight: bold;
+              position: absolute;
+              left: 0;
+            }
+            .strong {
+              font-weight: bold;
+            }
+            .resources {
+              margin-top: 30px;
+              padding-top: 20px;
+              border-top: 2px solid #68D466;
+            }
+            .resource {
+              margin-bottom: 5px;
+              font-size: 12px;
+            }
+            .footer {
+              margin-top: 30px;
+              text-align: center;
+              font-size: 12px;
+              color: #666;
+              border-top: 1px solid #e0e0e0;
+              padding-top: 20px;
+            }
+            .qr-section {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 20px;
+              margin: 20px 0;
+            }
+            .qr-code {
+              width: 80px;
+              height: 80px;
+            }
+            .website-info {
+              text-align: center;
+            }
+            @media print {
+              body {
+                font-size: 12px;
+              }
+              .header {
+                margin-bottom: 20px;
+              }
+              .section {
+                margin-bottom: 15px;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <div class="logo">⚖️ Advocado</div>
+            <div class="title">${currentRights.title}</div>
+            <div class="subtitle">Protest Rights Quick Reference</div>
+          </div>
+          
+          ${currentRights.sections
+            .map(
+              (section) => `
+            <div class="section">
+              <div class="section-title">${section.heading.replace(/[🛡️🚔🔒🏴󠁧󠁢󠁥󠁮󠁧󠁿]/g, "").trim()}</div>
+              ${section.points
+                .map(
+                  (point) => `
+                <div class="point">${point.replace(/\*\*(.*?)\*\*/g, '<span class="strong">$1</span>')}</div>
+              `,
+                )
+                .join("")}
+            </div>
+          `,
+            )
+            .join("")}
+          
+          <div class="resources">
+            <div class="section-title">📞 Important Resources & Contacts</div>
+            ${currentRights.importantNumbers
+              .map(
+                (resource) => `
+              <div class="resource">• ${resource.name}: ${resource.url.replace("https://", "").replace("tel:", "")}</div>
+            `,
+              )
+              .join("")}
+          </div>
+          
+          <div class="footer">
+            <div class="qr-section">
+              <img src="/qr-code.png" alt="Advocado QR Code" class="qr-code" />
+              <div class="website-info">
+                <div><strong>advocado.uk</strong></div>
+                <div>For more legal resources</div>
+              </div>
+            </div>
+            <div>This information is for general guidance only. Always consult with a qualified legal professional for specific legal situations.</div>
+            <div style="margin-top: 10px;">© 2024 Advocado. All rights reserved.</div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    return printContent;
+  };
+
+  const handlePrint = () => {
+    const printContent = generatePrintableContent();
+    const printWindow = window.open("", "_blank");
+    if (printWindow) {
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.print();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Global Header */}
-      <header className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <h1 className="text-xl font-bold text-gray-900">Know Your Rights</h1>
-            </div>
-            <Button variant="ghost" asChild>
-              <Link href="/" className="text-blue-600 hover:text-blue-700 font-medium">
-                ← Back to Home
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </header>
-
       {/* Country Selector */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-            <h2 className="text-lg font-semibold text-gray-900">Select Your Country:</h2>
+      <div className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
+        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-end space-x-4">
             <div className="relative">
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center justify-between w-64 px-4 py-2 text-left bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="flex w-64 items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-3 text-left shadow-sm hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
                 <div className="flex items-center space-x-3">
-                  <span className="text-2xl">{countryRights[selectedCountry].flag}</span>
-                  <span className="font-medium text-gray-900">{countryRights[selectedCountry].name}</span>
+                  <span className="text-2xl">
+                    {countryRights[selectedCountry].flag}
+                  </span>
+                  <span className="font-medium text-gray-900">
+                    {countryRights[selectedCountry].name}
+                  </span>
                 </div>
-                <ChevronDown className={`h-4 w-4 text-gray-500 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`h-4 w-4 text-gray-500 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+                />
               </button>
-              
+
               {isDropdownOpen && (
-                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                <div className="absolute top-full right-0 left-0 z-10 mt-1 rounded-lg border border-gray-200 bg-white shadow-lg">
                   {Object.entries(countryRights).map(([code, country]) => (
                     <button
                       key={code}
@@ -354,51 +556,83 @@ export default function KnowYourRightsPage() {
                         setSelectedCountry(code as Country);
                         setIsDropdownOpen(false);
                       }}
-                      className="flex items-center space-x-3 w-full px-4 py-3 text-left hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg transition-colors"
+                      className="flex w-full items-center space-x-3 px-4 py-3 text-left transition-colors first:rounded-t-lg last:rounded-b-lg hover:bg-gray-50"
                     >
                       <span className="text-2xl">{country.flag}</span>
-                      <span className="font-medium text-gray-900">{country.name}</span>
+                      <span className="font-medium text-gray-900">
+                        {country.name}
+                      </span>
                     </button>
                   ))}
                 </div>
               )}
             </div>
+            <button
+              onClick={handlePrint}
+              className="flex items-center justify-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm transition-colors hover:border-[#68D466] hover:bg-green-50 focus:border-[#68D466] focus:ring-2 focus:ring-[#68D466] focus:outline-none"
+            >
+              <span className="text-lg">🖨</span>
+              <span className="font-medium text-gray-900">
+                Print Cheat Sheet
+              </span>
+            </button>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Country Title */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">{currentRights.title}</h1>
-          <p className="text-xl text-gray-600">Understanding your rights during protests and legal interactions</p>
+        <div className="mb-8 text-center">
+          <h1 className="mb-2 text-4xl font-bold text-gray-900">
+            {currentRights.title}
+          </h1>
+          <p className="text-xl text-gray-600">
+            Understanding your rights during protests and legal interactions
+          </p>
         </div>
 
         {/* Rights Sections */}
-        <Card className="mb-8 bg-white border border-gray-200 shadow-sm">
+        <Card className="mb-8 border border-gray-200 bg-white shadow-sm">
           <CardHeader className="px-6 pt-6">
-            <CardTitle className="text-xl font-bold text-gray-900">Your Legal Rights</CardTitle>
+            <CardTitle className="text-xl font-bold text-gray-900">
+              Your Legal Rights
+            </CardTitle>
             <CardDescription className="text-gray-600">
-              Click on each section to expand and learn about your specific rights
+              Click on each section to expand and learn about your specific
+              rights
             </CardDescription>
           </CardHeader>
           <CardContent className="px-6 pb-6">
-            <Accordion type="multiple" defaultValue={["item-0"]} className="w-full">
+            <Accordion
+              type="multiple"
+              defaultValue={["item-0"]}
+              className="w-full"
+            >
               {currentRights.sections.map((section, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="border-b border-gray-200">
-                  <AccordionTrigger className="text-left py-4 hover:bg-gray-50 rounded-lg px-2 font-semibold text-gray-900">
+                <AccordionItem
+                  key={index}
+                  value={`item-${index}`}
+                  className="border-b border-gray-200"
+                >
+                  <AccordionTrigger className="rounded-lg px-2 py-4 text-left text-lg font-semibold text-gray-900 hover:bg-gray-50">
                     {section.heading}
                   </AccordionTrigger>
                   <AccordionContent className="px-2 pb-4">
                     <div className="space-y-3">
                       {section.points.map((point, pointIndex) => (
-                        <div key={pointIndex} className="flex items-start space-x-3">
-                          <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-2"></div>
-                          <p 
-                            className="text-sm leading-relaxed text-gray-700"
+                        <div
+                          key={pointIndex}
+                          className="flex items-start space-x-3"
+                        >
+                          <div className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-[#68D466]"></div>
+                          <p
+                            className="text-base leading-relaxed text-gray-700"
                             dangerouslySetInnerHTML={{
-                              __html: point.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-900">$1</strong>')
+                              __html: point.replace(
+                                /\*\*(.*?)\*\*/g,
+                                '<strong class="font-semibold text-gray-900">$1</strong>',
+                              ),
                             }}
                           />
                         </div>
@@ -412,76 +646,69 @@ export default function KnowYourRightsPage() {
         </Card>
 
         {/* Important Numbers/Resources */}
-        <Card className="mb-8 bg-white border border-gray-200 shadow-sm">
+        <Card className="mb-8 border border-gray-200 bg-white shadow-sm">
           <CardHeader className="px-6 pt-6">
-            <div className="flex items-center space-x-2">
-              <Phone className="h-5 w-5 text-blue-600" />
-              <CardTitle className="text-xl font-bold text-gray-900">Important Resources & Contacts</CardTitle>
-            </div>
+            <CardTitle className="text-xl font-bold text-gray-900">
+              📞 Important Resources & Contacts
+            </CardTitle>
             <CardDescription className="text-gray-600">
               Keep these resources handy for legal assistance and support
             </CardDescription>
           </CardHeader>
           <CardContent className="px-6 pb-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {currentRights.importantNumbers.map((resource, index) => (
-                <div key={index} className="flex items-center space-x-2 p-3 bg-gray-100 rounded-lg">
-                  <ExternalLink className="h-4 w-4 text-gray-500 flex-shrink-0" />
-                  <span className="text-sm text-gray-800">{resource}</span>
-                </div>
+                <a
+                  key={index}
+                  href={resource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 rounded-lg bg-gray-100 p-3 transition-colors hover:bg-gray-200"
+                >
+                  <span className="text-sm text-gray-800 hover:text-blue-600">
+                    {resource.name}
+                  </span>
+                </a>
               ))}
             </div>
           </CardContent>
         </Card>
 
         {/* Need Legal Assistance Section */}
-        <Card className="bg-white border border-gray-200 shadow-sm">
-          <CardHeader className="text-center px-6 pt-6">
-            <CardTitle className="text-xl font-bold text-gray-900">Need Professional Legal Assistance?</CardTitle>
+        <Card className="border border-gray-200 bg-white shadow-sm">
+          <CardHeader className="px-6 pt-6 text-center">
+            <CardTitle className="text-xl font-bold text-gray-900">
+              Need Professional Legal Assistance?
+            </CardTitle>
             <CardDescription className="text-gray-600">
-              If you're facing legal issues, it's important to consult with qualified legal professionals 
-              who can provide advice specific to your situation and jurisdiction.
+              If you&apos;re facing legal issues, it&apos;s important to consult
+              with qualified legal professionals who can provide advice specific
+              to your situation and jurisdiction.
             </CardDescription>
           </CardHeader>
-          <CardContent className="text-center px-6 pb-6">
-            <Badge variant="secondary" className="text-sm bg-gray-200 text-gray-800">
-              Connect with pro-bono lawyers and legal aid organizations in your region
+          <CardContent className="px-6 pb-6 text-center">
+            <Badge
+              variant="secondary"
+              className="bg-gray-200 text-sm text-gray-800"
+            >
+              Connect with pro-bono lawyers and legal aid organizations in your
+              region
             </Badge>
           </CardContent>
         </Card>
       </main>
 
       {/* Small Legal Disclaimer */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="flex items-center justify-center space-x-2 text-xs text-gray-500 bg-gray-100 rounded-lg p-3">
-          <AlertTriangle className="h-3 w-3 text-gray-400 flex-shrink-0" />
+      <div className="mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-center space-x-2 rounded-lg bg-gray-100 p-3 text-xs text-gray-500">
+          <AlertTriangle className="h-3 w-3 flex-shrink-0 text-gray-400" />
           <span>
-            This information is for general guidance only and does not constitute legal advice. 
-            Always consult with a qualified legal professional for specific legal situations.
+            This information is for general guidance only and does not
+            constitute legal advice. Always consult with a qualified legal
+            professional for specific legal situations.
           </span>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-            <div className="mb-4 md:mb-0">
-              <p className="text-sm text-gray-500">
-                © 2025 Know Your Rights. All rights reserved.
-              </p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="#" className="text-gray-500 hover:text-gray-700">Full Legal Disclaimer</Link>
-              </Button>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="#" className="text-gray-500 hover:text-gray-700">Contact Us</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
