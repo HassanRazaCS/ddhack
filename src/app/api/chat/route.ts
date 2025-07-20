@@ -90,7 +90,7 @@ export async function POST(req: Request) {
     };
 
     const stream = streamText({
-      model: google("gemini-1.5-flash"),
+      model: google("gemini-2.5-flash"),
       messages: [fullPromptMessage, ...messages],
       temperature: 0.3,
       maxTokens: 1000,
