@@ -26,7 +26,7 @@ export default async function Home() {
   return (
     // Apply background color and font directly
     <div className="font-['Newsreader']" style={{ backgroundColor: "#f6f6ed" }}>
-      <section className="flex items-center justify-center pt-32 pb-12">
+      <section className="flex items-center justify-center pt-64 pb-72">
         {/* Added px for consistency */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="mb-6 text-5xl leading-tight font-bold text-gray-800 md:text-6xl lg:text-7xl">
@@ -41,7 +41,7 @@ export default async function Home() {
 
       <hr className="mx-auto max-w-7xl border-gray-300" />
 
-      <section className="py-16">
+      <section className="py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
@@ -104,7 +104,7 @@ export default async function Home() {
 
       <hr className="mx-auto max-w-7xl border-gray-300" />
 
-      <section className="py-16">
+      <section className="py-32">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
           <div>
             <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">
