@@ -89,7 +89,9 @@ export function CaseCard({
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <CardTitle className="text-lg break-all">{caseData.title}</CardTitle>
+            <CardTitle className="text-lg break-all">
+              {caseData.title}
+            </CardTitle>
             <CardDescription className="mt-1 break-all">
               {caseData.legalCategory} • {caseData.jurisdiction},{" "}
               {caseData.country}
@@ -110,7 +112,7 @@ export function CaseCard({
         </div>
       </CardHeader>
       <CardContent>
-        <p className="mb-4 line-clamp-3 text-sm text-gray-600 break-all">
+        <p className="mb-4 line-clamp-3 text-sm break-all text-gray-600">
           {caseData.description}
         </p>
 
@@ -118,7 +120,9 @@ export function CaseCard({
           <div className="flex items-center space-x-4">
             <span>Created {formatDate(caseData.createdAt)}</span>
             {caseData.preferredLanguage && (
-              <span className="break-all">Language: {caseData.preferredLanguage}</span>
+              <span className="break-all">
+                Language: {caseData.preferredLanguage}
+              </span>
             )}
           </div>
           {userType === "SEEKER" && (
@@ -137,8 +141,13 @@ export function CaseCard({
           {userType === "SEEKER" ? (
             <div className="space-x-2">
               {caseData._count.interests > 0 && (
-                <Button size="sm" onClick={() => setShowInterested(!showInterested)}>
-                  {showInterested ? "Hide Interested Lawyers" : "View Interested Lawyers"}
+                <Button
+                  size="sm"
+                  onClick={() => setShowInterested(!showInterested)}
+                >
+                  {showInterested
+                    ? "Hide Interested Lawyers"
+                    : "View Interested Lawyers"}
                 </Button>
               )}
             </div>
@@ -153,11 +162,15 @@ export function CaseCard({
                 : expressInterest.isPending
                   ? "Submitting..."
                   : "Express Interest"}
+              The
             </Button>
           )}
         </div>
         {showInterested && interestedLawyers.data && (
-          <InterestedLawyers lawyers={interestedLawyers.data} isOpen={showInterested} />
+          <InterestedLawyers
+            lawyers={interestedLawyers.data}
+            isOpen={showInterested}
+          />
         )}
       </CardContent>
     </Card>
