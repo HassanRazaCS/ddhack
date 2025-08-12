@@ -162,7 +162,6 @@ export function CaseCard({
                 : expressInterest.isPending
                   ? "Submitting..."
                   : "Express Interest"}
-              The
             </Button>
           )}
         </div>
