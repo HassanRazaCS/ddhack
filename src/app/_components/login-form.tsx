@@ -49,9 +49,9 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="mx-auto max-w-md space-y-6">
+    <div className="mx-auto max-w-md space-y-6 px-4 sm:px-0">
       <div>
-        <h2 className="text-center text-3xl font-bold tracking-tight">
+        <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
           Sign in to your account
         </h2>
       </div>

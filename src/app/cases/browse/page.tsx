@@ -1,12 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "~/server/auth";
 import { db } from "~/server/db";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import { CaseCard } from "~/app/_components/case-card";
 import Link from "next/link";
@@ -76,17 +71,21 @@ export default async function BrowseCases({
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Browse Cases</h1>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                Browse Cases
+              </h1>
               <p className="mt-2 text-gray-600">
                 Find pro bono legal cases that match your expertise and help
                 those in need.
               </p>
             </div>
             <Link href="/dashboard/lawyer">
-              <Button variant="secondary">Back to Dashboard</Button>
+              <Button variant="secondary" className="w-full sm:w-auto">
+                Back to Dashboard
+              </Button>
             </Link>
           </div>
         </div>

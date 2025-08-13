@@ -55,8 +55,8 @@ export default async function SeekerDashboard() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">My Cases</h1>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">My Cases</h1>
           <p className="mt-2 text-gray-600">
             Welcome back, {session.user.name}. Manage your legal aid requests
             and connect with pro bono lawyers.
@@ -87,9 +87,9 @@ export default async function SeekerDashboard() {
         </div>
 
         {/* Dashboard Content */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 lg:gap-8 lg:grid-cols-3">
           {/* Main Content */}
-          <div className="space-y-8 lg:col-span-2">
+          <div className="space-y-6 lg:space-y-8 lg:col-span-2">
             {/* My Cases */}
             <Card>
               <CardHeader>
@@ -154,7 +154,7 @@ export default async function SeekerDashboard() {
                 <CardTitle>Case Overview</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-2">
                   <div className="text-center">
                     <p className="text-2xl font-bold text-gray-900">
                       {activeCases}
@@ -167,8 +167,6 @@ export default async function SeekerDashboard() {
                     </p>
                     <p className="text-sm text-gray-600">Lawyer Responses</p>
                   </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
                   <div className="text-center">
                     <p className="text-2xl font-bold text-gray-900">
                       {inReviewCases}

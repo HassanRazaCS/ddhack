@@ -2,6 +2,7 @@
 
 import { AlertTriangle, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { LegalRightsChatbot } from "~/app/_components/legal-rights-chatbot";
 
 // Shadcn UI components
 import {
@@ -348,6 +349,7 @@ type Country = keyof typeof countryRights;
 export default function KnowYourRightsPage() {
   const [selectedCountry, setSelectedCountry] = useState<Country>("UK");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
 
   const currentRights = countryRights[selectedCountry];
 
@@ -462,7 +464,10 @@ export default function KnowYourRightsPage() {
         </head>
         <body>
           <div class="header">
-            <div class="logo">⚖️ Advocado</div>
+            <div class="logo">
+              <img src="/logo.svg" alt="Advocado" style="height: 24px; width: auto; vertical-align: middle; margin-right: 8px;" />
+              Advocado
+            </div>
             <div class="title">${currentRights.title}</div>
             <div class="subtitle">Protest Rights Quick Reference</div>
           </div>
@@ -527,11 +532,11 @@ export default function KnowYourRightsPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Country Selector */}
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-end space-x-4">
-          <div className="relative">
+        <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-end sm:space-y-0 sm:space-x-4">
+          <div className="relative w-full sm:w-64">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex w-64 items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-3 text-left shadow-sm hover:border-gray-400 focus:border-[#68D466] focus:ring-2 focus:ring-[#68D466] focus:outline-none"
+              className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-3 text-left shadow-sm hover:border-gray-400 focus:border-[#68D466] focus:ring-2 focus:ring-[#68D466] focus:outline-none"
             >
               <div className="flex items-center space-x-3">
                 <span className="text-2xl">
@@ -566,13 +571,34 @@ export default function KnowYourRightsPage() {
               </div>
             )}
           </div>
-          <button
-            onClick={handlePrint}
-            className="flex items-center justify-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm transition-colors hover:border-[#68D466] hover:bg-green-50 focus:border-[#68D466] focus:ring-2 focus:ring-[#68D466] focus:outline-none"
-          >
-            <span className="text-lg">🖨</span>
-            <span className="font-medium text-gray-900">Print Cheat Sheet</span>
-          </button>
+          
+          <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
+            {/* Desktop chatbot button */}
+            <button
+              onClick={() => setIsChatbotOpen(true)}
+              className="hidden sm:flex items-center justify-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm transition-colors hover:border-[#68D466] hover:bg-green-50 focus:border-[#68D466] focus:ring-2 focus:ring-[#68D466] focus:outline-none"
+            >
+              <span className="text-lg">✨</span>
+              <span className="font-medium text-gray-900">Ask Advocado AI</span>
+            </button>
+            
+            {/* Mobile chatbot button - navigates to separate page */}
+            <a
+              href="/know-your-rights/chat"
+              className="flex sm:hidden items-center justify-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm transition-colors hover:border-[#68D466] hover:bg-green-50 focus:border-[#68D466] focus:ring-2 focus:ring-[#68D466] focus:outline-none"
+            >
+              <span className="text-lg">✨</span>
+              <span className="font-medium text-gray-900">Ask Advocado AI</span>
+            </a>
+            
+            <button
+              onClick={handlePrint}
+              className="flex items-center justify-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 shadow-sm transition-colors hover:border-[#68D466] hover:bg-green-50 focus:border-[#68D466] focus:ring-2 focus:ring-[#68D466] focus:outline-none"
+            >
+              <span className="text-lg">🖨</span>
+              <span className="font-medium text-gray-900 text-sm sm:text-base">Print Cheat Sheet</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -705,6 +731,12 @@ export default function KnowYourRightsPage() {
           </span>
         </div>
       </div>
+
+      {/* Legal Rights Chatbot */}
+      <LegalRightsChatbot
+        isOpen={isChatbotOpen}
+        onOpenChange={setIsChatbotOpen}
+      />
     </div>
   );
 }

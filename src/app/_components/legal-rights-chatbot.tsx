@@ -2,13 +2,26 @@
 
 import { useChat } from "ai/react";
 import { MessageCircle, RotateCcw, Send, X } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { ChatMarkdown } from "./chat-markdown";
 
-export function LegalRightsChatbot() {
-  const [isOpen, setIsOpen] = useState(false);
+interface LegalRightsChatbotProps {
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+export function LegalRightsChatbot({
+  isOpen: externalIsOpen,
+  onOpenChange,
+}: LegalRightsChatbotProps = {}) {
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+
+  // Use external state if provided, otherwise use internal state
+  const isOpen = externalIsOpen ?? internalIsOpen;
+  const setIsOpen = onOpenChange ?? setInternalIsOpen;
 
   const {
     messages,
@@ -35,23 +48,25 @@ export function LegalRightsChatbot() {
   const sampleQuestions = [
     "What are my rights during a police stop?",
     "Can police search my phone without a warrant?",
-    "What should I do if I&apos;m arrested?",
+    "What should I do if I'm arrested?",
     "Do I have the right to remain silent?",
     "What are my rights during a protest?",
   ];
 
   return (
     <>
-      {/* Floating Chat Button */}
-      <div className="fixed right-6 bottom-6 z-50">
-        <Button
-          onClick={() => setIsOpen(true)}
-          className="h-14 w-14 rounded-full bg-blue-600 shadow-lg transition-all duration-300 hover:bg-blue-700 hover:shadow-xl"
-          size="sm"
-        >
-          <MessageCircle className="h-6 w-6" />
-        </Button>
-      </div>
+      {/* Floating Chat Button - only show when no external control */}
+      {externalIsOpen === undefined && (
+        <div className="fixed right-6 bottom-6 z-50">
+          <Button
+            onClick={() => setIsOpen(true)}
+            className="h-14 w-14 rounded-full bg-[#68D466] shadow-lg transition-all duration-300 hover:bg-[#5BC659] hover:shadow-xl"
+            size="sm"
+          >
+            <MessageCircle className="h-6 w-6" />
+          </Button>
+        </div>
+      )}
 
       {/* Chat Modal */}
       {isOpen && (
@@ -65,16 +80,22 @@ export function LegalRightsChatbot() {
           {/* Chat Window */}
           <div className="relative m-4 flex h-[500px] w-[380px] flex-col rounded-lg bg-white shadow-2xl">
             {/* Header */}
-            <div className="flex items-center justify-between rounded-t-lg bg-blue-600 px-4 py-3 text-white">
+            <div className="flex items-center justify-between rounded-t-lg bg-[#68D466] px-4 py-3 text-white">
               <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500">
-                  ⚖️
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
+                  <Image
+                    src="/logo.svg"
+                    alt="Advocado"
+                    width={20}
+                    height={23}
+                    className="h-5 w-auto"
+                  />
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold">
-                    Legal Rights Assistant
+                    Advocado AI Assistant
                   </h3>
-                  <p className="text-xs text-blue-100">
+                  <p className="text-xs text-green-100">
                     Ask about your legal rights
                   </p>
                 </div>
@@ -85,7 +106,7 @@ export function LegalRightsChatbot() {
                   disabled={!messages.length}
                   size="icon"
                   variant="ghost"
-                  className="h-7 w-7 rounded-full bg-blue-500 text-white hover:bg-blue-400 disabled:opacity-50"
+                  className="h-7 w-7 rounded-full bg-[#5BC659] text-white hover:bg-[#4FB84A] disabled:opacity-50"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
                 </Button>
@@ -93,7 +114,7 @@ export function LegalRightsChatbot() {
                   onClick={() => setIsOpen(false)}
                   size="icon"
                   variant="ghost"
-                  className="h-7 w-7 rounded-full bg-blue-500 text-white hover:bg-blue-400"
+                  className="h-7 w-7 rounded-full bg-[#5BC659] text-white hover:bg-[#4FB84A]"
                 >
                   <X className="h-3.5 w-3.5" />
                 </Button>
@@ -158,7 +179,7 @@ export function LegalRightsChatbot() {
                         <div
                           className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
                             message.role === "user"
-                              ? "bg-blue-600 text-white"
+                              ? "bg-[#68D466] text-white"
                               : "bg-gray-100 text-gray-900"
                           }`}
                         >
@@ -178,7 +199,7 @@ export function LegalRightsChatbot() {
                           <div
                             className={`mt-1 text-xs ${
                               message.role === "user"
-                                ? "text-blue-200"
+                                ? "text-green-200"
                                 : "text-gray-500"
                             }`}
                           >
@@ -217,7 +238,7 @@ export function LegalRightsChatbot() {
                 <Button
                   type="submit"
                   disabled={isLoading || !input.trim()}
-                  className="bg-blue-600 px-3 py-2 hover:bg-blue-700 disabled:opacity-50"
+                  className="bg-[#68D466] px-3 py-2 hover:bg-[#5BC659] disabled:opacity-50"
                   size="sm"
                 >
                   <Send className="h-4 w-4" />
