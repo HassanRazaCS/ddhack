@@ -116,8 +116,8 @@ export function CaseCard({
           {caseData.description}
         </p>
 
-        <div className="mb-4 flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 text-sm text-gray-500">
-          <div className="flex flex-col space-y-1 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
+        <div className="mb-4 flex flex-col space-y-2 text-sm text-gray-500 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+          <div className="flex flex-col space-y-1 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
             <span>Created {formatDate(caseData.createdAt)}</span>
             {caseData.preferredLanguage && (
               <span className="break-all">
@@ -150,7 +150,7 @@ export function CaseCard({
                     : "View Interested Lawyers"}
                 </Button>
               )}
-            </>
+            </div>
           ) : (
             <Button
               size="sm"
